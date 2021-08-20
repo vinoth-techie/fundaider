@@ -1,14 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
+import Main from './components/MainComponents';
 
 function App() {
   return (
     <div className="App">
-        <p>Fundaider</p>
-        <nav>Home</nav>
-        <nav>About</nav>
-        <nav>Projects And Open Source</nav>
-        <nav>Contact</nav>
+        <Main/>
     </div>
   );
 }
