@@ -1,8 +1,9 @@
 import React,{Component} from 'react';
-import Header from './HeaderComponent';
+import Header from './Header';
 //import Footer from './FooterComponent';
-import Home from './HomeComponent';
+import Home from './Home';
 import { Switch, Route, Redirect, BrowserRouter } from 'react-router-dom';
+import Startups from './Startups';
 
 class Main extends Component{
 
@@ -11,6 +12,7 @@ class Main extends Component{
     const HomePage = () => {
       return(
         <Home />
+        
       );
     }
     return (

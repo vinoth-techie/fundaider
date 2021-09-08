@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron,
   Button, Modal, ModalHeader, ModalBody,
   Form, FormGroup, Input, Label, NavbarText} from 'reactstrap';
-  import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+  
 class Header extends Component {
   constructor(props) {
       super(props);
@@ -37,13 +38,13 @@ class Header extends Component {
                                 <NavLink className="nav-link"  to='/home'> Home</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link" to='/aboutus'>Projects</NavLink>
+                                <NavLink className="nav-link" to='/Project'>Projects</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link" to='/aboutus'> StartUps</NavLink>
+                                <NavLink className="nav-link" to='/Startups'> StartUps</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link" to='/aboutus'> Investors</NavLink>
+                                <NavLink className="nav-link" to='/Investors'> Investors</NavLink>
                             </NavItem>
                           </Nav>
                           <Nav navbar>
