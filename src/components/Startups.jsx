@@ -6,8 +6,6 @@ function Startups(props) {
       <div>
           Welcome to startup 
       </div>
-      
-      
     );
 }
 

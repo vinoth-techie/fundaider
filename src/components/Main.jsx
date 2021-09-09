@@ -7,28 +7,27 @@ import { Switch, Redirect } from 'react-router-dom';
 //import Startups from './Startups';
 import Project from './Project';
 import Startups from './Startups';
-
+import Investors from './Investors';
+import Login from './login';
 class Main extends Component{
-
-  
   render(){
     const HomePage = () => {
       return(
         <Home />
-        
       );
     }
     return (
       <div>
         <Header/>
-        <BrowserRouter>
         <Switch>
           <Route exact path='/home' component={HomePage} />
-          <Route exact path='/Startup' component={Startups} />
-          <Route exact path='/Project' component={Project} />
+          <Route exact path='/project' component={Project} />
+          <Route exact path='/startups' component={Startups} />
+          <Route exact path='/investors' component={Investors} />
+          <Route exact path='/login' component={Login} />
           <Redirect to="/home" />
         </Switch>
-        </BrowserRouter>
+        
       </div>
     );
   }

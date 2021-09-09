@@ -3,8 +3,8 @@ import React from 'react';
 function Project(props) {
     return(
       <div>
-          <title>Project</title>
-          <p>Welcome</p> 
+          
+          <p>Welcome to project</p> 
       </div>
       
       
