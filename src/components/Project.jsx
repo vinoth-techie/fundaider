@@ -4,7 +4,7 @@ function Project(props) {
     return(
       <div>
           <title>Project</title>
-          <p>Welcome!</p> 
+          <p>Welcome</p> 
       </div>
       
       
