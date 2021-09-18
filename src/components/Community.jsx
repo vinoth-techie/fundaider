@@ -34,13 +34,21 @@ class Investors extends Component {
         return (
             <div className="container">
                 <div className="row">
-                   
-                  
                     {
                         cards
                     }
 
                 </div>
+
+
+
+
+
+
+
+
+
+
             </div>
         );
     }

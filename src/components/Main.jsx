@@ -11,6 +11,7 @@ import Startups from './Startups';
 import Investors from './Investors';
 import Login from './login/Login';
 import SignUp from './signUp/SignUp';
+import Community from './Community'
 class Main extends Component{
   render(){
     const HomePage = () => {
@@ -27,6 +28,7 @@ class Main extends Component{
           <Route exact path='/startups' component={Startups} />
           <Route exact path='/investors' component={Investors} />
           <Route exact path='/login' component={Login} />
+          <Route exact path='/community' component={Community} />
           <Route exact path='/signup' component={SignUp} />
           <Redirect to="/home" />
         </Switch>

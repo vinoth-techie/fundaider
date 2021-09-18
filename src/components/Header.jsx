@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import Startups from './Startups';  
 import Project from './Project';
 import Investors from './Investors';
+import Community from './Community';
 class Header extends Component {
   constructor(props) {
       super(props);
@@ -40,6 +41,9 @@ class Header extends Component {
                         </NavItem>
                         <NavItem>
                             <NavLink className="nav-link" to='/investors'> Investors</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink className="nav-link" to='/community'> Community</NavLink>
                         </NavItem>
                       </Nav>
                       <Nav navbar className="justify-content-end">
