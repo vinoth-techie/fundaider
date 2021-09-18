@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { AuthProvider } from "../contexts/AuthContext";
 import Header from './Header';
 //import Footer from './FooterComponent';
 import Home from './Home';
@@ -8,7 +9,8 @@ import { Switch, Redirect } from 'react-router-dom';
 import Project from './Project';
 import Startups from './Startups';
 import Investors from './Investors';
-import Login from './login';
+import Login from './login/Login';
+import SignUp from './signUp/SignUp';
 class Main extends Component{
   render(){
     const HomePage = () => {
@@ -17,7 +19,7 @@ class Main extends Component{
       );
     }
     return (
-      <div>
+      <AuthProvider>
         <Header/>
         <Switch>
           <Route exact path='/home' component={HomePage} />
@@ -25,10 +27,11 @@ class Main extends Component{
           <Route exact path='/startups' component={Startups} />
           <Route exact path='/investors' component={Investors} />
           <Route exact path='/login' component={Login} />
+          <Route exact path='/signup' component={SignUp} />
           <Redirect to="/home" />
         </Switch>
         
-      </div>
+        </AuthProvider>
     );
   }
 }
