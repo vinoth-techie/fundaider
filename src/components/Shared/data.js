@@ -4,56 +4,80 @@ export const data=[
         img:"https://st2.depositphotos.com/1017228/9855/i/600/depositphotos_98555688-stock-photo-thoughtful-programmer-coding-in-the.jpg",
         name:"Vinoth kumar",
         designation:"developer",
+        gitlink:"https://github.com/vijaykrishna3301",
+        linkedinlink:"https://github.com/vijaykrishna3301",
+        maillink:"vinothkumarc2001@gmail.com",
 
     },
     {
-        id:0,
+        id:1,
         img:"https://st2.depositphotos.com/1017228/9855/i/600/depositphotos_98555688-stock-photo-thoughtful-programmer-coding-in-the.jpg",
-        name:"Vinoth kumar",
+        name:"Vinoth ",
         designation:"developer",
+        gitlink:"https://github.com/vijaykrishna3301",
+        linkedinlink:"https://github.com/vijaykrishna3301",
+        maillink:"vinothkumarc2001@gmail.com",
         
         
     },
     {
-        id:0,
+        id:2,
         img:"https://st2.depositphotos.com/1017228/9855/i/600/depositphotos_98555688-stock-photo-thoughtful-programmer-coding-in-the.jpg",
-        name:"Vinoth kumar",
+        name:" kumar",
         designation:"developer",
+        gitlink:"https://github.com/vijaykrishna3301",
+        linkedinlink:"https://github.com/vijaykrishna3301",
+        maillink:"vinothkumarc2001@gmail.com",
         
     },
     {
-        id:0,
+        id:3,
         img:"https://st2.depositphotos.com/1017228/9855/i/600/depositphotos_98555688-stock-photo-thoughtful-programmer-coding-in-the.jpg",
-        name:"Vinoth kumar",
+        name:"Vinoth",
         designation:"developer",
+        gitlink:"https://github.com/vijaykrishna3301",
+        linkedinlink:"https://github.com/vijaykrishna3301",
+        maillink:"vinothkumarc2001@gmail.com",
         
     },
     {
-        id:0,
+        id:4,
         img:"https://st2.depositphotos.com/1017228/9855/i/600/depositphotos_98555688-stock-photo-thoughtful-programmer-coding-in-the.jpg",
-        name:"Vinoth kumar",
+        name:"kumar",
         designation:"developer",
+        gitlink:"https://github.com/vijaykrishna3301",
+        linkedinlink:"https://github.com/vijaykrishna3301",
+        maillink:"vinothkumarc2001@gmail.com",
         
     },
     {
-        id:0,
+        id:5,
         img:"https://st2.depositphotos.com/1017228/9855/i/600/depositphotos_98555688-stock-photo-thoughtful-programmer-coding-in-the.jpg",
-        name:"Vinoth kumar",
+        name:"Vinoth",
         designation:"developer",
+        gitlink:"https://github.com/vijaykrishna3301",
+        linkedinlink:"https://github.com/vijaykrishna3301",
+        maillink:"vinothkumarc2001@gmail.com",
         
     },
     {
-        id:0,
+        id:9,
         img:"https://st2.depositphotos.com/1017228/9855/i/600/depositphotos_98555688-stock-photo-thoughtful-programmer-coding-in-the.jpg",
         name:"Vinoth kumar",
         designation:"developer",
+        gitlink:"https://github.com/vijaykrishna3301",
+        linkedinlink:"https://github.com/vijaykrishna3301",
+        maillink:"vinothkumarc2001@gmail.com",
         
     },
     {
-        id:0,
+        id:6,
         img:"https://st2.depositphotos.com/1017228/9855/i/600/depositphotos_98555688-stock-photo-thoughtful-programmer-coding-in-the.jpg",
         name:"Vinoth kumar",
         designation:"developer",
+        gitlink:"https://github.com/vijaykrishna3301",
+        linkedinlink:"https://github.com/vijaykrishna3301",
+        maillink:"vinothkumarc2001@gmail.com",
         
     }
 ]

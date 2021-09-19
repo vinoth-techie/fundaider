@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import Startups from './Startups';  
 import Project from './Project';
 import Investors from './Investors';
-import Community from './Community';
+import Community from './community/Community';
 class Header extends Component {
   constructor(props) {
       super(props);
