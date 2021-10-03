@@ -7,6 +7,7 @@ import Startups from './Startups';
 import Project from './Project';
 import Investors from './Investors';
 import Community from './community/Community';
+import addUserForm from './Form';
 class Header extends Component {
   constructor(props) {
       super(props);
@@ -44,6 +45,9 @@ class Header extends Component {
                         </NavItem>
                         <NavItem>
                             <NavLink className="nav-link" to='/community'> Community</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink className="nav-link" to='/form'>Edit Profile</NavLink>
                         </NavItem>
                       </Nav>
                       <Nav navbar className="justify-content-end">

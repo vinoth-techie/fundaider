@@ -1,9 +1,9 @@
 import React,{Component} from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { AuthProvider } from "../contexts/AuthContext";
-import Header from './Header';
+import Header from "./Header"
 //import Footer from './FooterComponent';
-import Home from './Home';
+import Home from './home/Home';
 import {useLocation ,useHistory, Switch, Redirect } from 'react-router-dom';
 //import Startups from './Startups';
 import Project from './Project';
@@ -11,9 +11,11 @@ import Startups from './Startups';
 import Investors from './Investors';
 import Login from './login/Login';
 import SignUp from './signUp/SignUp';
+import addUserForm from './Form';
 
-import CommunityDetails from './community/CommunityDetails';
+//import CommunityDetails from './community/CommunityDetails';
 import Community from './community/Community';
+import CommunityDetails from './community/CommunityDetails';
 
 
 function Main() {
@@ -45,7 +47,8 @@ function Main() {
           <Route exact path='/startups' component={Startups} />
           <Route exact path='/investors' component={Investors} />
           <Route exact path='/login' component={Login} />
-          <Route exact path='/community' component={CommunityPage} />
+          <Route exact path='/form' component={addUserForm} />
+          <Route exact path='/community' component={Community} />
           <Route  path='/community/' component={CommunityDetailsPage} />
           <Route exact path='/signup' component={SignUp} />
           <Redirect to="/home" />
