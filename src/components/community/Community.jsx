@@ -13,6 +13,7 @@ import IconButton from "@material-ui/core/IconButton";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import MailIcon from "@material-ui/icons/Mail";
 import FacebookIcon from "@material-ui/icons/Facebook";
+import TwitterIcon from '@material-ui/icons/Twitter';
 import { data } from "../Shared/data";
 
 class Community extends Component {
@@ -71,9 +72,14 @@ class Community extends Component {
                   <MailIcon />
                 </IconButton>
               </a>
-              <a href={card.maillink} target="_blank" rel="noreferrer">
+              {/* <a href={card.maillink} target="_blank" rel="noreferrer">
                 <IconButton color="inherit">
                   <FacebookIcon />
+                </IconButton>
+              </a> */}
+              <a href={card.maillink} target="_blank" rel="noreferrer">
+                <IconButton color="inherit">
+                 <TwitterIcon/>
                 </IconButton>
               </a>
             </CardFooter>

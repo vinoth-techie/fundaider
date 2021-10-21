@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from "react";
 import {
   Navbar,
@@ -18,22 +19,32 @@ import {
 import { NavLink } from "react-router-dom";
 import Startups from "./Startups";
 import Project from "./Project";
-import Investors from "./Investors";
+import Investors from "./investors/Investors";
 import Community from "./community/Community";
 import addUserForm from "./Form";
 import { useAuth } from "../contexts/AuthContext";
+import { auth } from "../fireBase/firebase";
+import InvestorProfile from "./updateProfile/InvestorsProfile";
+
 class Header extends Component {
   constructor(props) {
     super(props);
     this.toggleNav = this.toggleNav.bind(this);
     this.state = {
       isNavOpen: false,
+
     };
+    this.handleLogout=this.handleLogout.bind(this);
   }
   toggleNav() {
     this.setState({
       isNavOpen: !this.state.isNavOpen,
     });
+  }
+
+   handleLogout = async() =>{ 
+     console.log("button click");
+    await auth.signOut();
   }
 
   render() {
@@ -83,15 +94,27 @@ class Header extends Component {
                     Edit Profile
                   </NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink className="nav-link" to="/investorform">
+                    Investor 
+                  </NavLink>
+                </NavItem>
               </Nav>
-              {this.props.currentUser && 
-              <Nav navbar className="justify-content-end">
+             
+              <Nav navbar className = {this.props.currentUser ? "d-none":"d-block justify-content-end"}>
                 <NavItem>
                   <NavLink className="nav-link" to="/login">
                     <i class="fa fa-sign-in" aria-hidden="true"></i> Login
                   </NavLink>
                 </NavItem>
-              </Nav>}
+              </Nav>
+              <Nav navbar className = {this.props.currentUser ? "d-block justify-content-end":"d-none"}>
+                <NavItem>
+                  
+                <i class="fa fa-sign-in" aria-hidden="true"></i> <button onClick = {this.handleLogout}>Logout</button>
+                 
+                </NavItem>
+              </Nav>
             </Collapse>
           </div>
         </Navbar>

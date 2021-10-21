@@ -7,6 +7,7 @@ import React, { Component } from "react";
 //import MailIcon from "@material-ui/icons/Mail";
 import { data } from "../Shared/data";
 import "./Style.css";
+import { Badge } from 'react-bootstrap';
 //import { Link } from "react-router-dom";
 export default class CommunityDetails extends Component {
   constructor(props) {
@@ -64,7 +65,7 @@ export default class CommunityDetails extends Component {
                             <line x1="2" y1="12" x2="22" y2="12"></line>
                             <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
                           </svg>
-                          Website
+                          Website/Blog 
                         </h6>
                         <a href={card.gitlink} target="_blank" rel="noreferrer">
                           <span className="text-secondary">
@@ -114,7 +115,7 @@ export default class CommunityDetails extends Component {
                         </h6>
                         <span className="text-secondary">@bootdey</span>
                       </li>
-                      <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                      {/* <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                         <h6 className="mb-0">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -142,7 +143,7 @@ export default class CommunityDetails extends Component {
                           Instagram
                         </h6>
                         <span className="text-secondary">bootdey</span>
-                      </li>
+                      </li> */}
                       <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                         <h6 className="mb-0">
                           <svg
@@ -186,16 +187,16 @@ export default class CommunityDetails extends Component {
                           {card.maillink}
                         </div>
                       </div>
-                      <hr />
-                      <div className="row">
+                      {/* <hr /> */}
+                      {/* <div className="row">
                         <div className="col-sm-3">
                           <h6 className="mb-0">Phone</h6>
                         </div>
                         <div className="col-sm-9 text-secondary">
-                          {/* (239) */} 816-9029
-                        </div>
-                      </div>
-                      {/*  <hr/> */}
+                          {/* (239) */} 
+                        {/* </div>
+                      </div>  */}
+                      {/*  <hr/>  */}
                       {/* <div className="row"> */}
                       {/* <div className="col-sm-3"> */}
                       {/*  <h6 className="mb-0">Mobile</h6> */}
@@ -215,35 +216,36 @@ export default class CommunityDetails extends Component {
                       <div className="row">
                         {/* <div className="col-sm-12">
                                 <a className="btn btn-info " target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
-                            </div> */}
-                      </div>
+                    </div> */}
                     </div>
                   </div>
 
                   <div className="row gutters-sm">
-                    <div className="col-sm-6 mb-3">
+                    <div className="row-sm-6 mb-3">
                       <div className="card h-100">
                         <div className="card-body">
                           <h6 className="d-flex align-items-center mb-3">
                             <i className="material-icons text-info mr-2"></i>
-                            Projects{" "}
+                            SKILLS{" "}
                           </h6>
-                          <small>Web Design</small>
                           <div
-                            className="progress mb-3"
-                            style={{ height: "5px" }}
+                            className="label label-success "
+                            /* style={{ height: "5px" }} */
                           >
-                            <div
+                            <Badge bg="primary">Web Design</Badge>{' '}   
+                            <Badge bg="primary">Web Design</Badge>{' '}
+                            <Badge bg="primary">Web Design</Badge>{' '}
+                            {/* <div
                               className="progress-bar bg-primary"
                               role="progressbar"
                               style={{ width: "80%" }}
                               aria-valuenow="80"
                               aria-valuemin="0"
                               aria-valuemax="100"
-                            ></div>
+                            ></div> */}
                           </div>
-                          <small>Website Markup</small>
-                          <div
+                          {/* <small>Website Markup</small> */}
+                          {/* <div
                             className="progress mb-3"
                             style={{ height: "5px" }}
                           >
@@ -251,62 +253,22 @@ export default class CommunityDetails extends Component {
                               className="progress-bar bg-primary"
                               role="progressbar"
                               style={{ width: "72%" }}
-                              aria-valuenow="72"
+                              aria-valuenow="80"
                               aria-valuemin="0"
                               aria-valuemax="100"
                             ></div>
                           </div>
-                          <small>One Page</small>
-                          <div
-                            className="progress mb-3"
-                            style={{ height: "5px" }}
-                          >
-                            <div
-                              className="progress-bar bg-primary"
-                              role="progressbar"
-                              style={{ width: "89%" }}
-                              aria-valuenow="89"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            ></div>
-                          </div>
-                          <small>Mobile Template</small>
-                          <div
-                            className="progress mb-3"
-                            style={{ height: "5px" }}
-                          >
-                            <div
-                              className="progress-bar bg-primary"
-                              role="progressbar"
-                              style={{ width: "55%" }}
-                              aria-valuenow="55"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            ></div>
-                          </div>
-                          <small>Backend API</small>
-                          <div
-                            className="progress mb-3"
-                            style={{ height: "5px" }}
-                          >
-                            <div
-                              className="progress-bar bg-primary"
-                              role="progressbar"
-                              style={{ width: "66%" }}
-                              aria-valuenow="66"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                            ></div>
+                          */}
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="col-sm-6 mb-3">
+                    <div className="row-sm-6 mb-3">
                       <div className="card h-100">
                         <div className="card-body">
                           <h6 className="d-flex align-items-center mb-3">
                             <i className="material-icons text-info mr-2"></i>
-                            Skills{" "}
+                            PROJECTS{" "}
                           </h6>
                           <small>Web Design</small>
                           <div

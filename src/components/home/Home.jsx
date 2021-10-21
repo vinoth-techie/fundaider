@@ -2,6 +2,15 @@ import React, { Component } from "react";
 import "./home.css";
 import about from "./about.jpg";
 class Home extends Component {
+  handleLogout = async() =>{
+    
+   /*  try{
+      await logout();
+      history.push('/login');
+    }catch{
+      setError('Failed to Log out');
+    } */
+  }
   render() {
     return (
       <div className="container">

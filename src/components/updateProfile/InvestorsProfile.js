@@ -1,16 +1,15 @@
-/* eslint-disable no-unused-vars */
 import React, { useRef, useState, useEffect } from "react";
 //import { Form, Card, Alert } from "react-bootstrap";
 //import Button from "@material-ui/core/Button";
 import { useAuth } from "../../contexts/AuthContext";
 
+import { Avatar, CssBaseline } from "@material-ui/core";
 //import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import InfoIcon from "@material-ui/icons/Info";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { Card, Form, Button, Row, Col, InputGroup } from "react-bootstrap";
 import { Container } from "react-bootstrap";
-
 import { Link, useHistory } from "react-router-dom";
 import Header from "../Header";
 import axios from "axios";
@@ -39,13 +38,9 @@ export default function UpdateProfile() {
   const [inputField, setInputField] = useState({
     name: "",
     email: currentUser && currentUser.email,
-    college: "",
-    githublink: "",
+    mobileNumber: "",
+    aboutMe: "",
     imageUrl: "",
-    /* designation:"",
-    twitter:"",
-    linkedin:"",
-    blogs:"", */
   });
   useEffect(() => {
     axios
@@ -63,18 +58,14 @@ export default function UpdateProfile() {
       college: details[0].college,
       githublink: details[0].githublink,
       imageUrl: "",
-      /* designation:details[0].designation,
-      twitter:details[0].twitter,
-      linkedin:details[0].linkedin,
-      blogs:details[0].blogs, */
     });
     console.log(details[0], "account");
   };
 
   const [project, setProject] = useState({
-    projectName: "",
-    projectgitlink: "",
-    projectdetails: "",
+    portfolioName: "",
+    portfolioWebsiteLink: "",
+    portfolioDetails: "",
   });
 
   const dataChange = (e) => {
@@ -92,7 +83,6 @@ export default function UpdateProfile() {
   const [edit, setEdit] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  ///currentUser
 
   //useHistory
   const history = useHistory();
@@ -107,37 +97,25 @@ export default function UpdateProfile() {
       
     } */
     axios
-      .put("http://localhost:3001/userdata", {
+      .post("http://localhost:3001/userdata", {
         name: inputField.name,
         email: inputField.email,
-        college: inputField.college,
-        githublink: inputField.githublink,
+        mobileNumber: inputField.mobileNumber,
+        aboutMe: inputField.aboutMe,
         imageUrl: inputField.imageUrl,
-        /* designation:inputField.designation,
-        twitter:inputField.twitter,
-        linkedin:inputField.linkedin,
-        blogs:inputField.blogs, */
       })
       .then((response) => console.log(response.data))
       .catch((error) => console.log(error));
-    console.log(inputField.email, "vinoth");
-    /* setInputField({
-      name: "",
-      email: "",
-      college: "",
-      githublink: "",
-      imageUrl: "",
-    }); */
+    console.log(inputField, "vinoth");
   };
   const addProject = (e) => {
     e.preventDefault();
     axios
       .put("http://localhost:3001/projects", {
-        
         email: inputField.email,
-        projectName: project.projectName,
-        projectgitlink: project.projectgitlink,
-        projectdetails: project.projectdetails,
+        portfolioName: project.portfolioName,
+        portfolioDetails: project.portfolioDetails,
+        portfolioWebsiteLink: project.portfolioWebsiteLink,
       })
       .then((response) => console.log(response.data))
       .catch((error) => console.log(error));
@@ -194,7 +172,7 @@ export default function UpdateProfile() {
                     name="name"
                     value={inputField.name}
                     onChange={dataChange}
-                    placeholder="Enter Name"
+                    placeholder="Enter Your Name"
                   />
                 </Form.Group>
                 <Form.Group as={Col} controlId="image">
@@ -203,10 +181,12 @@ export default function UpdateProfile() {
                     autoComplete="off"
                     type="text"
                     name="imageUrl"
-                    placeholder="Enter Your google drive Image link"
+                    placeholder="Enter Your Profile GoogleDrive URL"
                   />
                 </Form.Group>
-                <Form.Group as={Col} id="email">
+              </Row>
+              <Row className="mb-3">
+                <Form.Group id="email">
                   <Form.Label htmlFor="email">
                     Email<span className="text-danger"> *</span>
                   </Form.Label>
@@ -219,104 +199,36 @@ export default function UpdateProfile() {
                         ? currentUser && currentUser.email
                         : inputField.email
                     }
-                    defaultValue={currentUser && currentUser.email}
                     onChange={dataChange}
-                    placeholder="Email"
+                    placeholder="Enter Your Email"
+                  />
+                </Form.Group>
+                <Form.Group as={Col} controlId="mobileNumber">
+                  <Form.Label>Mobile Number</Form.Label>
+                  <Form.Control
+                    required
+                    autoComplete="off"
+                    type="text"
+                    name="mobileNumber"
+                    value={inputField.mobileNumber}
+                    onChange={dataChange}
+                    placeholder="Enter mobileNumber "
                   />
                 </Form.Group>
               </Row>
               <Row className="mb-3">
-               
-
-                <Form.Group as={Col} controlId="college">
-                  <Form.Label>College</Form.Label>
+                <Form.Group as={Col} controlId="aboutMe">
+                  <Form.Label>aboutMe</Form.Label>
                   <Form.Control
                     required
                     autoComplete="off"
                     type="text"
-                    name="college"
-                    value={inputField.college}
+                    name="aboutMe"
+                    value={inputField.aboutMe}
                     onChange={dataChange}
-                    placeholder="Enter College Name"
+                    placeholder="Enter Your aboutMe"
                   />
                 </Form.Group>
-                <Form.Group as={Col} controlId="designation">
-                  <Form.Label>Designation</Form.Label>
-                  <Form.Control
-                    required
-                    autoComplete="off"
-                    type="text"
-                    name="designation"
-                    value={inputField.designation}
-                    onChange={dataChange}
-                    placeholder="Enter Your Designation"
-                  />
-                </Form.Group>
-                <Form.Group as={Col} controlId="githublink">
-                  <Form.Label>GithubLink</Form.Label>
-                  <Form.Control
-                    required
-                    autoComplete="off"
-                    type="text"
-                    name="githublink"
-                    value={inputField.githublink}
-                    onChange={dataChange}
-                    placeholder="Enter Your Githublink"
-                  />
-                </Form.Group>
-              </Row>
-              <Row className="mb-3">
-                <Form.Group as={Col} controlId="twitter">
-                  <Form.Label>Twitter </Form.Label>
-                  <Form.Control
-                    required
-                    autoComplete="off"
-                    type="text"
-                    name="twitter"
-                    value={inputField.twitter}
-                    onChange={dataChange}
-                    placeholder="Enter Your Twitter profile link"
-                  />
-                </Form.Group>
-                <Form.Group as={Col} controlId="linkedin">
-                  <Form.Label>LinkedIn </Form.Label>
-                  <Form.Control
-                    required
-                    autoComplete="off"
-                    type="text"
-                    name="linkedin"
-                    value={inputField.linkedin}
-                    onChange={dataChange}
-                    placeholder="Enter Your Linkedin profile link"
-                  />
-                </Form.Group>
-                <Form.Group as={Col} controlId="blogs">
-                  <Form.Label>Website/Blog</Form.Label>
-                  <Form.Control
-                    required
-                    autoComplete="off"
-                    type="text"
-                    name="blogs"
-                    value={inputField.blogs}
-                    onChange={dataChange}
-                    placeholder="Enter Your Blogs"
-                  />
-                </Form.Group>
-              </Row>
-              <Row className="mb-3">
-              
-                {/* <Form.Group as={Col} controlId="skills">
-                  <Form.Label>Skills</Form.Label>
-                  <Form.Control
-                    required
-                    autoComplete="off"
-                    type="text"
-                    name="skills"
-                    value={inputField.githublink}
-                    onChange={dataChange}
-                    placeholder="Enter Your Skills"
-                  />
-                </Form.Group> */}
               </Row>
             </Card.Body>
             <Card.Footer style={{ textAlign: "right" }}>
@@ -330,53 +242,53 @@ export default function UpdateProfile() {
           </Form>
         </Card>
 
-        <h3>Projects</h3>
+        <h3>Portfolio</h3>
         <Button onClick={handleEdit}>
-          <i class="fa fa-plus-square" aria-hidden="true"></i> Add Project
+          <i class="fa fa-plus-square" aria-hidden="true"></i> Add Portfolio
         </Button>
         <Card className={edit ? "border" : "d-none border"}>
-          <Card.Header>Project Details</Card.Header>
+          <Card.Header>Portfolio Details</Card.Header>
           <Form onReset={resetForm} onSubmit={addProject} id="addProjectForm">
             <Card.Body>
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="name">
-                  <Form.Label>Project Name</Form.Label>
+                  <Form.Label>Portfolio Name</Form.Label>
                   <Form.Control
                     required
                     autoComplete="off"
                     type="text"
-                    name="projectName"
-                    value={project.projectName}
+                    name="portfolioName"
+                    value={project.portfolioName}
                     onChange={projectDataChange}
-                    placeholder="Enter Name"
+                    placeholder="Enter Your Portfolio Name"
                   />
                 </Form.Group>
               </Row>
               <Row className="mb-3">
-                <Form.Group as={Col} controlId="projectdetails">
-                  <Form.Label>Project Details</Form.Label>
+                <Form.Group as={Col} controlId="portfolioDetails">
+                  <Form.Label>Portfolio Details</Form.Label>
                   <Form.Control
                     required
                     autoComplete="off"
                     type="text"
-                    name="projectdetails"
-                    value={project.projectdetails}
+                    name="portfolioDetails"
+                    value={project.portfolioDetails}
                     onChange={projectDataChange}
-                    placeholder="Enter Project Details"
+                    placeholder="Enter Portfolio Details"
                   />
                 </Form.Group>
               </Row>
               <Row className="mb-3">
-                <Form.Group as={Col} controlId="projectgitlink">
-                  <Form.Label>GithubLink</Form.Label>
+                <Form.Group as={Col} controlId="portfolioWebsiteLink">
+                  <Form.Label>Portfolio Website Link</Form.Label>
                   <Form.Control
                     required
                     autoComplete="off"
                     type="text"
-                    name="projectgitlink"
-                    value={project.projectgitlink}
+                    name="portfolioWebsiteLink"
+                    value={project.portfolioWebsiteLink}
                     onChange={projectDataChange}
-                    placeholder="Enter Your Githublink"
+                    placeholder="Enter Your Portfolio Website Link"
                   />
                 </Form.Group>
               </Row>

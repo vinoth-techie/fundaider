@@ -36,9 +36,9 @@ export default class addUserForm extends Component {
         };
         //console.log(user);
 
-        axios.post('http://localhost:3001/userdata', user)
+       /*  axios.post('http://localhost:3001/userdata', user)
             .then((response) => console.log(response.data))
-            .catch((error) => console.log(error))
+            .catch((error) => console.log(error)) */
     }
 
 

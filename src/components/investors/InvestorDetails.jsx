@@ -8,7 +8,7 @@ import MailIcon from "@material-ui/icons/Mail";
 import { data } from "../Shared/data";
 //import { Link } from "react-router-dom";
 
-export class CommunityDetails extends Component {
+export class InvestorDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -69,4 +69,4 @@ export class CommunityDetails extends Component {
   }
 }
 
-export default CommunityDetails;
+export default InvestorDetails;

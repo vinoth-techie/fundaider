@@ -13,7 +13,7 @@ import GitHubIcon from "@material-ui/icons/GitHub";
 import IconButton from "@material-ui/core/IconButton";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import MailIcon from "@material-ui/icons/Mail";
-import { data1 } from "./Shared/data1";
+import { data1 } from "../Shared/data1";
 class Investors extends Component {
   constructor(props) {
     super(props);
