@@ -3,19 +3,104 @@ import React, { useRef, useState, useEffect } from "react";
 //import { Form, Card, Alert } from "react-bootstrap";
 //import Button from "@material-ui/core/Button";
 import { useAuth } from "../../contexts/AuthContext";
-
 //import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import InfoIcon from "@material-ui/icons/Info";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { Card, Form, Button, Row, Col, InputGroup } from "react-bootstrap";
 import { Container } from "react-bootstrap";
-
 import { Link, useHistory } from "react-router-dom";
 import Header from "../Header";
 import axios from "axios";
 import { auth } from "../../fireBase/firebase";
 
+const RenderDisplayProjects = ({ pro }) => {
+  const { currentUser } = useAuth();
+  const [project, setProject] = useState({
+    projectName: pro.projectName,
+    projectgitlink: pro.projectdetails,
+    projectdetails: pro.projectgitlink,
+  });
+  const projectDataChange = (e) => {
+    setProject({ ...project, [e.target.name]: e.target.value });
+  };
+  const resetForm = () => {};
+  const addProject = (e) => {
+    e.preventDefault();
+    axios
+      .put("http://localhost:3001/projects/update", {
+        email: currentUser && currentUser.email,
+        id: pro._id,
+        projectName: project.projectName,
+        projectgitlink: project.projectgitlink,
+        projectdetails: project.projectdetails,
+      })
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log(error));
+    console.log(project);
+  };
+  return (
+    <div>
+      <Card /* className={ ? "border" : "d-none border"} */>
+        <Card.Header>Project Details</Card.Header>
+        <Form onReset={resetForm} onSubmit={addProject} id="addProjectForm">
+          <Card.Body>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="name">
+                <Form.Label>Project Name</Form.Label>
+                <Form.Control
+                  required
+                  autoComplete="off"
+                  type="text"
+                  name="projectName"
+                  value={project.projectName}
+                  onChange={projectDataChange}
+                  placeholder="Enter Name"
+                />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="projectdetails">
+                <Form.Label>Project Details</Form.Label>
+                <Form.Control
+                  required
+                  autoComplete="off"
+                  type="text"
+                  name="projectdetails"
+                  value={project.projectdetails}
+                  onChange={projectDataChange}
+                  placeholder="Enter Project Details"
+                />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="projectgitlink">
+                <Form.Label>GithubLink</Form.Label>
+                <Form.Control
+                  required
+                  autoComplete="off"
+                  type="text"
+                  name="projectgitlink"
+                  value={project.projectgitlink}
+                  onChange={projectDataChange}
+                  placeholder="Enter Your Githublink"
+                />
+              </Form.Group>
+            </Row>
+          </Card.Body>
+          <Card.Footer style={{ textAlign: "right" }}>
+            <Button size="md" type="submit" variant="success">
+              Submit
+            </Button>{" "}
+            <Button size="md" type="reset" variant="info">
+              Reset
+            </Button>
+          </Card.Footer>
+        </Form>
+      </Card>
+    </div>
+  );
+};
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: "flex",
@@ -35,6 +120,27 @@ export default function UpdateProfile() {
   const { currentUser, updatePassword, updateEmail } = useAuth();
 
   const [details, setDetails] = useState();
+  const [disproj, setDisproj] = useState();
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/getProjects")
+      .then((response) => response.data)
+      .then((response) => addDisplayProj(response))
+      .catch((error) => console.log(error));
+  }, []);
+  var sample;
+  const addDisplayProj = async (dis) => {
+    sample = await dis.filter(
+      (pro) => pro.email === (currentUser && currentUser.email)
+    );
+    await setValue(sample);
+    await setDisproj(sample);
+    console.log(sample, "sample");
+  };
+  const setValue = (te) => {
+    setDisproj(te);
+    console.log(disproj, "project");
+  };
 
   const [inputField, setInputField] = useState({
     name: "",
@@ -42,33 +148,41 @@ export default function UpdateProfile() {
     college: "",
     githublink: "",
     imageUrl: "",
-    /* designation:"",
-    twitter:"",
-    linkedin:"",
-    blogs:"", */
+    designation: "",
+    twitter: "",
+    linkedin: "",
+    blogs: "",
   });
+
   useEffect(() => {
     axios
       .get("http://localhost:3001/getuser")
-      .then((response) => addDetails(response.data))
+      .then((response) => response.data)
+      .then((response) => addDetails(response))
       .catch((error) => console.log(error));
   }, []);
   const addDetails = async (det) => {
+    /* console.log(det) */
     let user = (await currentUser) && currentUser.email;
     let temp = det.filter((de) => de.email === user);
-    setDetails(temp);
-    setInputField({
-      name: details[0].name,
-      email: details[0].email,
-      college: details[0].college,
-      githublink: details[0].githublink,
-      imageUrl: "",
-      /* designation:details[0].designation,
-      twitter:details[0].twitter,
-      linkedin:details[0].linkedin,
-      blogs:details[0].blogs, */
-    });
-    console.log(details[0], "account");
+    /* console.log(temp,"vini") */
+    await setDetails(temp);
+    //  console.log(details[0],"vijay")
+    await temp.map((de) =>
+      setInputField({
+        //changes made here
+        name: de.name,
+        email: de.email,
+        college: de.college,
+        githublink: de.githublink,
+        imageUrl: de.imageUrl,
+        designation: de.designation,
+        twitter: de.twitter,
+        linkedin: de.linkedin,
+        blogs: de.blogs,
+      })
+    );
+    console.log(inputField.name, "account");
   };
 
   const [project, setProject] = useState({
@@ -113,10 +227,10 @@ export default function UpdateProfile() {
         college: inputField.college,
         githublink: inputField.githublink,
         imageUrl: inputField.imageUrl,
-        /* designation:inputField.designation,
-        twitter:inputField.twitter,
-        linkedin:inputField.linkedin,
-        blogs:inputField.blogs, */
+        designation: inputField.designation,
+        twitter: inputField.twitter,
+        linkedin: inputField.linkedin,
+        blogs: inputField.blogs,
       })
       .then((response) => console.log(response.data))
       .catch((error) => console.log(error));
@@ -133,7 +247,6 @@ export default function UpdateProfile() {
     e.preventDefault();
     axios
       .put("http://localhost:3001/projects", {
-        
         email: inputField.email,
         projectName: project.projectName,
         projectgitlink: project.projectgitlink,
@@ -177,6 +290,17 @@ export default function UpdateProfile() {
       .catch((error) => console.log(error));
   }
 
+  /*  const displayProject = disproj.map((proj) => {
+    return proj.projects.map((pro) => {
+      console.log(pro, "projects");
+      return (
+        <div key={pro._id}>
+          <RenderDisplayProjects pro={pro} />
+        </div>
+      );
+    });
+  }); */
+  //console.log("proje", sample);
   return (
     <>
       <div className="container">
@@ -203,6 +327,8 @@ export default function UpdateProfile() {
                     autoComplete="off"
                     type="text"
                     name="imageUrl"
+                    value={inputField.imageUrl}
+                    onChange={dataChange}
                     placeholder="Enter Your google drive Image link"
                   />
                 </Form.Group>
@@ -226,8 +352,6 @@ export default function UpdateProfile() {
                 </Form.Group>
               </Row>
               <Row className="mb-3">
-               
-
                 <Form.Group as={Col} controlId="college">
                   <Form.Label>College</Form.Label>
                   <Form.Control
@@ -304,7 +428,6 @@ export default function UpdateProfile() {
                 </Form.Group>
               </Row>
               <Row className="mb-3">
-              
                 {/* <Form.Group as={Col} controlId="skills">
                   <Form.Label>Skills</Form.Label>
                   <Form.Control
@@ -331,6 +454,7 @@ export default function UpdateProfile() {
         </Card>
 
         <h3>Projects</h3>
+        <div className="col-12">{/* {displayProject} */}</div>
         <Button onClick={handleEdit}>
           <i class="fa fa-plus-square" aria-hidden="true"></i> Add Project
         </Button>

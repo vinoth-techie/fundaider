@@ -1,22 +1,32 @@
 import React, { Component } from "react";
-//import { Card, CardBody, CardTitle,CardImg } from "reactstrap";
-//import GitHubIcon from '@mui/icons-material/GitHub';
-//import GitHubIcon from "@material-ui/icons/GitHub";
-//import IconButton from "@material-ui/core/IconButton";
-//import LinkedInIcon from "@material-ui/icons/LinkedIn";
-//import MailIcon from "@material-ui/icons/Mail";
 import { data } from "../Shared/data";
 import "./Style.css";
 import { Badge } from 'react-bootstrap';
+import axios from 'axios';
 //import { Link } from "react-router-dom";
 export default class CommunityDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      userDetails:null
+    };
+
   }
   handleClick = (link) => {
     this.props.history.push(link);
   };
+  componentDidMount=()=>{
+    axios.get("http://localhost:3001/projects/getdetails")
+    .then((response) => response.data)
+    .then((response) => this.getProj(response))
+    .catch((error) => console.log(error));
+  }
+  getProj=(data)=>{
+     this.setState({
+       userDetails:data
+     })
+     console.log(this.state.userDetails)
+  }
   render() {
     // eslint-disable-next-line array-callback-return
     const cards = data.map((card) => {

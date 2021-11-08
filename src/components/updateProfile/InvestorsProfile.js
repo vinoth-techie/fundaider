@@ -1,8 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef, useState, useEffect } from "react";
 //import { Form, Card, Alert } from "react-bootstrap";
 //import Button from "@material-ui/core/Button";
 import { useAuth } from "../../contexts/AuthContext";
-
 import { Avatar, CssBaseline } from "@material-ui/core";
 //import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
@@ -39,6 +39,11 @@ export default function UpdateProfile() {
     name: "",
     email: currentUser && currentUser.email,
     mobileNumber: "",
+    designation: "",
+    investortype: "",
+    investrange: "",
+    location: "",
+    website: "",
     aboutMe: "",
     imageUrl: "",
   });
@@ -51,15 +56,23 @@ export default function UpdateProfile() {
   const addDetails = async (det) => {
     let user = (await currentUser) && currentUser.email;
     let temp = det.filter((de) => de.email === user);
-    setDetails(temp);
-    setInputField({
-      name: details[0].name,
-      email: details[0].email,
-      college: details[0].college,
-      githublink: details[0].githublink,
-      imageUrl: "",
-    });
-    console.log(details[0], "account");
+    await setDetails(temp);
+    await temp.map((de) =>
+      setInputField({
+        //changes made here
+        name: de.name,
+        email: de.email,
+        /*  mobileNumber: "",
+        designation: "",
+        investortype: "",
+        investrange: "",
+        location: "",
+        website: "",
+        aboutMe: "",
+        imageUrl: "", */
+      })
+    );
+    console.log(inputField.name, "account");
   };
 
   const [project, setProject] = useState({
@@ -101,8 +114,14 @@ export default function UpdateProfile() {
         name: inputField.name,
         email: inputField.email,
         mobileNumber: inputField.mobileNumber,
-        aboutMe: inputField.aboutMe,
         imageUrl: inputField.imageUrl,
+        designation: inputField.designation,
+        investortype: inputField.investortype,
+        investrange: inputField.investrange,
+        location: inputField.location,
+        website: inputField.website,
+        aboutMe: inputField.aboutMe,
+        
       })
       .then((response) => console.log(response.data))
       .catch((error) => console.log(error));
@@ -184,9 +203,7 @@ export default function UpdateProfile() {
                     placeholder="Enter Your Profile GoogleDrive URL"
                   />
                 </Form.Group>
-              </Row>
-              <Row className="mb-3">
-                <Form.Group id="email">
+                <Form.Group as={Col} id="email">
                   <Form.Label htmlFor="email">
                     Email<span className="text-danger"> *</span>
                   </Form.Label>
@@ -203,6 +220,8 @@ export default function UpdateProfile() {
                     placeholder="Enter Your Email"
                   />
                 </Form.Group>
+              </Row>
+              <Row className="mb-3">
                 <Form.Group as={Col} controlId="mobileNumber">
                   <Form.Label>Mobile Number</Form.Label>
                   <Form.Control
@@ -215,10 +234,72 @@ export default function UpdateProfile() {
                     placeholder="Enter mobileNumber "
                   />
                 </Form.Group>
+                <Form.Group as={Col} controlId="designation">
+                  <Form.Label>Designation</Form.Label>
+                  <Form.Control
+                    required
+                    autoComplete="off"
+                    type="text"
+                    name="designation"
+                    value={inputField.designation}
+                    onChange={dataChange}
+                    placeholder="Enter Your Designation"
+                  />
+                </Form.Group>
+                <Form.Group as={Col} controlId="investortype">
+                  <Form.Label>Investor Type</Form.Label>
+                  <Form.Control
+                    required
+                    autoComplete="off"
+                    type="text"
+                    name="investortype"
+                    value={inputField.investortype}
+                    onChange={dataChange}
+                    placeholder="Enter Your Investor Type"
+                  />
+                </Form.Group>
+              </Row>
+              <Row className="mb-3">
+                <Form.Group as={Col} controlId="investrange">
+                  <Form.Label>INVESTMENT RANGE </Form.Label>
+                  <Form.Control
+                    required
+                    autoComplete="off"
+                    type="text"
+                    name="investrange"
+                    value={inputField.investrange}
+                    onChange={dataChange}
+                    placeholder="Enter Your INVESTMENT RANGE"
+                  />
+                </Form.Group>
+                <Form.Group as={Col} controlId="location">
+                  <Form.Label>LOCATION </Form.Label>
+                  <Form.Control
+                    required
+                    autoComplete="off"
+                    type="text"
+                    name="location"
+                    value={inputField.location}
+                    onChange={dataChange}
+                    placeholder="Enter Your LOCATION"
+                  />
+                </Form.Group>
+                <Form.Group as={Col} controlId="website">
+                  <Form.Label>Website</Form.Label>
+                  <Form.Control
+                    required
+                    autoComplete="off"
+                    type="text"
+                    name="blogs"
+                    value={inputField.website}
+                    onChange={dataChange}
+                    placeholder="Enter Your Official Website/Company"
+                  />
+                </Form.Group>
               </Row>
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="aboutMe">
-                  <Form.Label>aboutMe</Form.Label>
+                  <Form.Label>ABOUT ME</Form.Label>
                   <Form.Control
                     required
                     autoComplete="off"
