@@ -13,6 +13,8 @@ import { Link, useHistory } from "react-router-dom";
 import Header from "../Header";
 import axios from "axios";
 import { auth } from "../../fireBase/firebase";
+import ChipsArray from "./ChipsArray";
+
 
 const RenderDisplayProjects = ({ pro }) => {
   const { currentUser } = useAuth();
@@ -24,6 +26,7 @@ const RenderDisplayProjects = ({ pro }) => {
   const projectDataChange = (e) => {
     setProject({ ...project, [e.target.name]: e.target.value });
   };
+
   const resetForm = () => {};
   const addProject = (e) => {
     e.preventDefault();
@@ -39,6 +42,15 @@ const RenderDisplayProjects = ({ pro }) => {
       .catch((error) => console.log(error));
     console.log(project);
   };
+  const handleDelete=async ()=>{
+   await axios.put("http://localhost:3001/projects/delete",{
+      id:pro._id,
+      email: currentUser && currentUser.email,
+    })
+    .then((response) => console.log(response.data))
+    .catch((error) => console.log(error));
+    await window.location.reload()
+  }
   return (
     <div>
       <Card /* className={ ? "border" : "d-none border"} */>
@@ -90,10 +102,10 @@ const RenderDisplayProjects = ({ pro }) => {
           </Card.Body>
           <Card.Footer style={{ textAlign: "right" }}>
             <Button size="md" type="submit" variant="success">
-              Submit
+              Update
             </Button>{" "}
-            <Button size="md" type="reset" variant="info">
-              Reset
+            <Button size="md" type="reset" variant="danger" onClick={handleDelete}>
+             Delete
             </Button>
           </Card.Footer>
         </Form>
@@ -101,6 +113,7 @@ const RenderDisplayProjects = ({ pro }) => {
     </div>
   );
 };
+//form style
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: "flex",
@@ -112,7 +125,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
 }));
-
+//update profile function
 export default function UpdateProfile() {
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -121,23 +134,35 @@ export default function UpdateProfile() {
 
   const [details, setDetails] = useState();
   const [disproj, setDisproj] = useState();
+  const [skills,setSkills] = useState('');
+  const [skillArr,setSkillArr]  = useState([]);
+  const [state,setState] = useState({
+    name:'',
+    place:'',
+    description:'',
+    status:''
+  })
+  const [startUpArr,setStartUpArr] = useState([]);
+  const [startUpStatus,setStartupStatus] = useState('');
   useEffect(() => {
     axios
       .get("http://localhost:3001/getProjects")
       .then((response) => response.data)
       .then((response) => addDisplayProj(response))
-      .catch((error) => console.log(error));
-  }, []);
+      .catch((error) => console.log(error)); 
+  }, []);  
+
+
   var sample;
   const addDisplayProj = async (dis) => {
-    sample = await dis.filter(
+    //await setValue(sample);
+    await setDisproj(dis.filter(
       (pro) => pro.email === (currentUser && currentUser.email)
-    );
-    await setValue(sample);
-    await setDisproj(sample);
-    console.log(sample, "sample");
+    ));
+    console.log(disproj, "sample");
   };
   const setValue = (te) => {
+    
     setDisproj(te);
     console.log(disproj, "project");
   };
@@ -154,6 +179,7 @@ export default function UpdateProfile() {
     blogs: "",
   });
 
+
   useEffect(() => {
     axios
       .get("http://localhost:3001/getuser")
@@ -162,13 +188,10 @@ export default function UpdateProfile() {
       .catch((error) => console.log(error));
   }, []);
   const addDetails = async (det) => {
-    /* console.log(det) */
     let user = (await currentUser) && currentUser.email;
     let temp = det.filter((de) => de.email === user);
-    /* console.log(temp,"vini") */
     await setDetails(temp);
-    //  console.log(details[0],"vijay")
-    await temp.map((de) =>
+    await temp.map((de) =>{
       setInputField({
         //changes made here
         name: de.name,
@@ -180,17 +203,23 @@ export default function UpdateProfile() {
         twitter: de.twitter,
         linkedin: de.linkedin,
         blogs: de.blogs,
+      }) 
+    });
+    let te=[]
+    await temp.map((data)=>{
+      data.skills.map((da)=>{
+        te.push(da)
       })
-    );
-    console.log(inputField.name, "account");
+    })
+    setSkillArr(te); 
   };
+
 
   const [project, setProject] = useState({
     projectName: "",
     projectgitlink: "",
     projectdetails: "",
   });
-
   const dataChange = (e) => {
     setInputField({ ...inputField, [e.target.name]: e.target.value });
   };
@@ -198,14 +227,19 @@ export default function UpdateProfile() {
   const projectDataChange = (e) => {
     setProject({ ...project, [e.target.name]: e.target.value });
   };
+  const handleStartUpChange = (e) =>{   
+    setState({...state,[e.target.name]:e.target.value});
+}
 
   const handleEdit = () => {
     setEdit((edit) => !edit);
   };
   const resetForm = () => {};
   const [edit, setEdit] = useState(false);
+  const [showStartup,setShowStartUp]=useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  
   ///currentUser
 
   //useHistory
@@ -220,7 +254,7 @@ export default function UpdateProfile() {
 
       
     } */
-    axios
+    await axios
       .put("http://localhost:3001/userdata", {
         name: inputField.name,
         email: inputField.email,
@@ -234,15 +268,22 @@ export default function UpdateProfile() {
       })
       .then((response) => console.log(response.data))
       .catch((error) => console.log(error));
+
+    await skillArr.map(async(data)=>{
+      await axios.put("http://localhost:3001/skillUpdate",{
+          email:currentUser&&currentUser.email, 
+          key: data.key,
+          skill:data.label,
+      })
+    .then((response) => console.log(response.data))
+    .catch((error) => console.log(error));
+    })
+    
+
     console.log(inputField.email, "vinoth");
-    /* setInputField({
-      name: "",
-      email: "",
-      college: "",
-      githublink: "",
-      imageUrl: "",
-    }); */
   };
+
+  
   const addProject = (e) => {
     e.preventDefault();
     axios
@@ -289,8 +330,8 @@ export default function UpdateProfile() {
       .then((response) => console.log(response.data))
       .catch((error) => console.log(error));
   }
-
-  /*  const displayProject = disproj.map((proj) => {
+  
+   const displayProject = disproj&&disproj.map((proj) => {
     return proj.projects.map((pro) => {
       console.log(pro, "projects");
       return (
@@ -299,8 +340,61 @@ export default function UpdateProfile() {
         </div>
       );
     });
-  }); */
-  //console.log("proje", sample);
+  });
+ 
+  const handleAddSkill = () =>{
+    // let kee = skillArr[skillArr.length-1];
+    // let kk = parseInt(kee.key)+1;
+    const obj = {
+      key: skillArr.length, skill: skills,
+    }
+    skillArr.push(obj);
+    setSkills('');
+  }
+  useEffect(()=>{
+    console.log("skills array",skillArr);
+  },[skillArr])
+  const handleDelete = (chipToDelete) =>{
+    setSkillArr(
+      (data) => data.filter((data) => data.key !== chipToDelete.key)
+    )
+  }
+  const handleStartUp = () =>{
+    setShowStartUp(!showStartup)
+  }
+
+ const addStartUp = async(e) =>{
+    e.preventDefault();
+    await axios
+      .put("http://localhost:3001/startup", {
+        name: state.name,
+        email: currentUser&&currentUser.email,
+        place : state.place,
+        description:state.description
+      })
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log(error));
+
+    await startUpArr.map(async(data)=>{
+      await axios.put("http://localhost:3001/statusUpdate",{
+          email:currentUser&&currentUser.email,  
+          str:data
+      })
+    .then((response) => console.log(response.data))
+    .catch((error) => console.log(error));
+    })
+ }
+ const dis = startUpArr.map((data,index)=>{ 
+    return(
+     <span key={index}>{data}&nbsp;,</span>
+    ) 
+ })
+ const addStatus = () =>{
+   console.log(state.status)
+   startUpArr.push(state.status);
+   console.log(startUpArr) 
+ }
+ 
   return (
     <>
       <div className="container">
@@ -427,19 +521,28 @@ export default function UpdateProfile() {
                   />
                 </Form.Group>
               </Row>
+              <Row>
+                <Form.Group as={Col} controlId="skills">
+                    <Form.Label>Skills</Form.Label>
+                    <Form.Control
+                      required
+                      autoComplete="off"
+                      type="text"
+                      name="skills"
+                      onChange={(e)=>setSkills(e.target.value)}
+                      placeholder="Enter Your Skills"
+                    />
+                    <Button size="md" variant="primary" onClick={handleAddSkill} >
+                     Add
+                  </Button>
+                  </Form.Group>
+                  
+              </Row>
               <Row className="mb-3">
-                {/* <Form.Group as={Col} controlId="skills">
-                  <Form.Label>Skills</Form.Label>
-                  <Form.Control
-                    required
-                    autoComplete="off"
-                    type="text"
-                    name="skills"
-                    value={inputField.githublink}
-                    onChange={dataChange}
-                    placeholder="Enter Your Skills"
-                  />
-                </Form.Group> */}
+                <Form.Group as={Col} controlId="skills">
+                  <ChipsArray skill={skillArr} delete={handleDelete}/>
+                  
+                </Form.Group>
               </Row>
             </Card.Body>
             <Card.Footer style={{ textAlign: "right" }}>
@@ -454,7 +557,7 @@ export default function UpdateProfile() {
         </Card>
 
         <h3>Projects</h3>
-        <div className="col-12">{/* {displayProject} */}</div>
+        <div className="col-12">{displayProject}</div>
         <Button onClick={handleEdit}>
           <i class="fa fa-plus-square" aria-hidden="true"></i> Add Project
         </Button>
@@ -504,6 +607,92 @@ export default function UpdateProfile() {
                   />
                 </Form.Group>
               </Row>
+            </Card.Body>
+            <Card.Footer style={{ textAlign: "right" }}>
+              <Button size="md" type="submit" variant="success">
+                Submit
+              </Button>{" "}
+              <Button size="md" type="reset" variant="info">
+                Reset
+              </Button>
+            </Card.Footer>
+          </Form>
+        </Card>
+        <h3>Start-Up</h3>
+        <div className="col-12"></div>
+        <Button onClick={handleStartUp}>
+          <i class="fa fa-plus-square" aria-hidden="true"></i> Add Start-Up
+        </Button>
+        <Card className={showStartup ? "border" : "d-none border"}>
+          <Card.Header>StartUp Details</Card.Header>
+          <Form onReset={resetForm} onSubmit={addStartUp} id="addProjectForm">
+            <Card.Body>
+              <Row className="mb-3">
+                <Form.Group as={Col} controlId="name">
+                  <Form.Label>StartUp Name</Form.Label>
+                  <Form.Control
+                    required
+                    autoComplete="off"
+                    type="text"
+                    name="name"
+                    value={state.name}
+                    onChange={handleStartUpChange}
+                    placeholder="Enter Name"
+                  />
+                </Form.Group>
+              </Row>
+              <Row className="mb-3">
+                <Form.Group as={Col}>
+                  <Form.Label>StartUp place</Form.Label>
+                  <Form.Control
+                    as="textarea" rows={2}
+                    required
+                    autoComplete="off"
+                    type="text"
+                    name="place" 
+                    value={state.place}
+                    onChange={handleStartUpChange}
+                    placeholder="place"
+                  />
+                </Form.Group>
+              </Row>
+              <Row className="mb-3">
+                <Form.Group as={Col}>
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control
+                    required
+                    as="textarea" rows={2}
+                    autoComplete="off"
+                    type="text"
+                    name="description" 
+                    placeholder="Description"
+                    value={state.description}
+                    onChange={handleStartUpChange}
+                  />
+                </Form.Group>
+              </Row>
+              <Row className="mb-3">
+                <Form.Group as={Col} controlId="name">
+                  <Form.Label>StartUp Status</Form.Label>
+                  <Form.Control 
+                    autoComplete="off"
+                    type="text"
+                    name="status"
+                    value={state.status}
+                    onChange={handleStartUpChange}
+                    placeholder="Enter Name"
+                  />
+                </Form.Group>
+              </Row>
+              <Button
+                size="md" variant="primary"
+                onClick = {addStatus}
+              >
+                  ADD
+              </Button>
+              <div>
+                {dis&&dis}
+              </div>
             </Card.Body>
             <Card.Footer style={{ textAlign: "right" }}>
               <Button size="md" type="submit" variant="success">

@@ -15,6 +15,103 @@ import Header from "../Header";
 import axios from "axios";
 import { auth } from "../../fireBase/firebase";
 
+const RenderDisplayProjects = ({ pro }) => {
+  const { currentUser } = useAuth();
+  const [project, setProject] = useState({
+      portfolioName: pro.portfolioName,
+      portfolioDetails: pro.portfolioDetails,
+      portfolioWebsiteLink: pro.portfolioWebsiteLink,
+  });
+  const projectDataChange = (e) => {
+    setProject({ ...project, [e.target.name]: e.target.value });
+  };
+  const resetForm = () => {};
+  const addProject = (e) => {
+    e.preventDefault();
+    axios
+      .put("http://localhost:3001/portfolios/update", { //change
+        email: currentUser && currentUser.email,
+        id: pro._id,
+        portfolioName: project.portfolioName,
+        portfolioDetails: project.portfolioDetails,
+        portfolioWebsiteLink: project.portfolioWebsiteLink,
+      })
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log(error));
+    console.log(project);
+  };
+  const handleDelete=async ()=>{
+   await axios.put("http://localhost:3001/portfolios/delete",{ //change
+      id:pro._id,
+      email: currentUser && currentUser.email,
+    })
+    .then((response) => console.log(response.data))
+    .catch((error) => console.log(error));
+    await window.location.reload()
+  }
+  return (
+    <div>
+     <Card /* className={edit ? "border" : "d-none border"} */>
+        <Card.Header>Portfolio Details</Card.Header>
+        <Form onReset={resetForm} onSubmit={addProject} id="addPortfolioForm">
+          <Card.Body>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="name">
+                <Form.Label>Portfolio Name</Form.Label>
+                <Form.Control
+                  required
+                  autoComplete="off"
+                  type="text"
+                  name="portfolioName"
+                  value={project.portfolioName}
+                  onChange={projectDataChange}
+                  placeholder="Enter Your Portfolio Name"
+                />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="portfolioDetails">
+                <Form.Label>Portfolio Details</Form.Label>
+                <Form.Control
+                  required
+                  autoComplete="off"
+                  type="text"
+                  name="portfolioDetails"
+                  value={project.portfolioDetails}
+                  onChange={projectDataChange}
+                  placeholder="Enter Portfolio Details"
+                />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="portfolioWebsiteLink">
+                <Form.Label>Portfolio Website Link</Form.Label>
+                <Form.Control
+                  required
+                  autoComplete="off"
+                  type="text"
+                  name="portfolioWebsiteLink"
+                  value={project.portfolioWebsiteLink}
+                  onChange={projectDataChange}
+                  placeholder="Enter Your Portfolio Website Link"
+                />
+              </Form.Group>
+            </Row>
+          </Card.Body>
+          <Card.Footer style={{ textAlign: "right" }}>
+            <Button size="md" type="submit" variant="success">
+              Update
+            </Button>{" "}
+            <Button size="md" type="reset" variant="info">
+              Delete
+            </Button>
+          </Card.Footer>
+        </Form>
+      </Card>
+    </div>
+  );
+};
+//form style
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: "flex",
@@ -26,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
 }));
-
+//update profile function
 export default function UpdateProfile() {
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -34,6 +131,50 @@ export default function UpdateProfile() {
   const { currentUser, updatePassword, updateEmail } = useAuth();
 
   const [details, setDetails] = useState();
+  const [disproj, setDisproj] = useState();
+  const [invest,setInvest] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/getProjects")//confusion
+      .then((response) => response.data)
+      .then((response) => addDisplayProj(response))
+      .catch((error) => console.log(error)); 
+  }, []);
+  useEffect(()=>{
+    axios.get("http://localhost:3001/getInvestors")
+    .then((res)=>addInvestor(res.data))
+    .catch((err)=>console.log(err))
+    console.log("sdfsd",invest);
+  },[])
+  const addInvestor = async(data) =>{
+    await setInvest(data)
+    console.log("dfsadf",invest)
+    setInputField({ 
+      name: invest.name,
+      email: invest.email,
+      mobileNumber: invest.mobileNumber,
+      designation: invest.designation,
+      investortype: invest.investortype,
+      investrange: invest.investrange,
+      location: invest.location,
+      website: invest.website,
+      aboutMe: invest.aboutMe,
+      imageUrl: invest.imageUrl,
+    })
+  }
+  var sample;
+  const addDisplayProj = async (dis) => {
+    //await setValue(sample);
+    await setDisproj(dis.filter(
+      (pro) => pro.email === (currentUser && currentUser.email)
+    ));
+    console.log(disproj, "sample");
+  };
+  const setValue = (te) => {
+
+    setDisproj(te);
+    console.log(disproj, "project");
+  };//newoneadded 
 
   const [inputField, setInputField] = useState({
     name: "",
@@ -47,10 +188,12 @@ export default function UpdateProfile() {
     aboutMe: "",
     imageUrl: "",
   });
+
   useEffect(() => {
     axios
-      .get("http://localhost:3001/getuser")
-      .then((response) => addDetails(response.data))
+      .get("http://localhost:3001/getinvestor")//change
+      .then((response) => response.data)
+      .then((response) => addDetails(response))
       .catch((error) => console.log(error));
   }, []);
   const addDetails = async (det) => {
@@ -62,14 +205,14 @@ export default function UpdateProfile() {
         //changes made here
         name: de.name,
         email: de.email,
-        /*  mobileNumber: "",
-        designation: "",
-        investortype: "",
-        investrange: "",
-        location: "",
-        website: "",
-        aboutMe: "",
-        imageUrl: "", */
+        mobileNumber: de.mobileNumber,
+        designation: de.designation,
+        investortype: de.investortype,
+        investrange: de.investrange,
+        location: de.location,
+        website: de.website,
+        aboutMe: de.aboutMe,
+        imageUrl: de.imageUrl,
       })
     );
     console.log(inputField.name, "account");
@@ -98,6 +241,7 @@ export default function UpdateProfile() {
   const [loading, setLoading] = useState(false);
 
   //useHistory
+
   const history = useHistory();
 
   const classes = useStyles();
@@ -106,11 +250,9 @@ export default function UpdateProfile() {
     e.preventDefault();
     /* if (inputField.email !== currentUser.email){
       await currentUser.updateEmail(inputField.email);
-
-      
     } */
     axios
-      .post("http://localhost:3001/userdata", {
+      .post("http://localhost:3001/investordata", {
         name: inputField.name,
         email: inputField.email,
         mobileNumber: inputField.mobileNumber,
@@ -120,8 +262,7 @@ export default function UpdateProfile() {
         investrange: inputField.investrange,
         location: inputField.location,
         website: inputField.website,
-        aboutMe: inputField.aboutMe,
-        
+        aboutMe: inputField.aboutMe
       })
       .then((response) => console.log(response.data))
       .catch((error) => console.log(error));
@@ -130,7 +271,7 @@ export default function UpdateProfile() {
   const addProject = (e) => {
     e.preventDefault();
     axios
-      .put("http://localhost:3001/projects", {
+      .put("http://localhost:3001/portfolios", {//change
         email: inputField.email,
         portfolioName: project.portfolioName,
         portfolioDetails: project.portfolioDetails,
@@ -169,10 +310,20 @@ export default function UpdateProfile() {
       });
 
     axios
-      .post("http://localhost:3001/userdata", {})
+      .post("http://localhost:3001/investordata", {})//change
       .then((response) => console.log(response.data))
       .catch((error) => console.log(error));
   }
+  const displayProject = disproj&&disproj.map((proj) => {
+    return proj.projects.map((pro) => {
+      console.log(pro, "projects");
+      return (
+        <div key={pro._id}>
+          <RenderDisplayProjects pro={pro} />
+        </div>
+      );
+    });
+  });
 
   return (
     <>
@@ -200,6 +351,8 @@ export default function UpdateProfile() {
                     autoComplete="off"
                     type="text"
                     name="imageUrl"
+                    value={inputField.imageUrl}
+                    onChange={dataChange}
                     placeholder="Enter Your Profile GoogleDrive URL"
                   />
                 </Form.Group>
@@ -287,10 +440,10 @@ export default function UpdateProfile() {
                 <Form.Group as={Col} controlId="website">
                   <Form.Label>Website</Form.Label>
                   <Form.Control
-                    required
+                   // required
                     autoComplete="off"
                     type="text"
-                    name="blogs"
+                    name="website"
                     value={inputField.website}
                     onChange={dataChange}
                     placeholder="Enter Your Official Website/Company"

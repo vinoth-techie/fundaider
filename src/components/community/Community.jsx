@@ -1,13 +1,15 @@
 /* eslint-disable no-unused-vars */
-import React, { Component } from "react";
+import React, { useState,useEffect } from "react";
 import {
   Card,
   CardBody,
   CardTitle,
   CardSubTitle,
   CardImg,
+  Button,
   CardFooter,
 } from "reactstrap";
+import { Form } from "react-bootstrap";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import IconButton from "@material-ui/core/IconButton";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
@@ -15,28 +17,38 @@ import MailIcon from "@material-ui/icons/Mail";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from '@material-ui/icons/Twitter';
 import { data } from "../Shared/data";
-
-class Community extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-
-    this.handleCategory = this.handleCategory.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+import axios from 'axios';
+import {useHistory} from 'react-router-dom'
+function Community(){ 
+  const [state,setState] = useState({
+    community:[],
+    result:[],
+    search:''
+  });
+  const history = useHistory();
+ useEffect(()=>{
+    axios.get("http://localhost:3001/getuser")
+    .then((res)=>addCommunity(res.data))
+    .catch((err)=>console.log(err))
+    console.log("sdfsd",state.community);
+  },[])
+ const addCommunity = (data) =>{
+    setState({
+      community:data,
+      result:data,
+    })
+    console.log("dfsadf",state.community)
   }
-
-  handleCategory = (id, name) => {
-    console.log(id);
-    this.props.history.push({
-      pathname: `/community/${name}`,
-      state: { id: id },
+  const handleCategory = (card) => { 
+    history.push({
+      pathname: `/community/details`,
+      state: { data: card },
     });
   };
-  handleClick = (link) => {
-    this.props.history.push(link);
-  };
-  render() {
-    const cards = data.map((card) => {
+  const handleClick = (link) => {
+    history.push(link);
+  }; 
+    const cards = state.community&&state.community.map((card) => {
       return (
         <div className="col-6 col-md-3 mb-3" key={card.id}>
           <Card
@@ -46,9 +58,9 @@ class Community extends Component {
               backgroundColor: "#f1f1f1",
             }}
           >
-            <CardBody onClick={() => this.handleCategory(card.id, card.name)}>
+            <CardBody onClick={() => handleCategory(card)}>
               <CardImg
-                src={card.img}
+                src={card.imageUrl}
                 className="circular--square "
                 height="140"
                 width="50"
@@ -87,12 +99,40 @@ class Community extends Component {
         </div>
       );
     });
+
+    const handleSearch = (e) =>{
+      e.preventDefault();
+      setState({
+        ...state,
+        [e.target.name]:e.target.value,
+        community:state.result.filter(o =>{
+          return Object.keys(o).some(k => o[k].toString().toLowerCase().includes(e.target.value.toString().toLowerCase()))
+        })
+      });
+      console.log("sdfsa",state.search);
+    }
     return (
       <div className="container">
-        <div className="row">{cards}</div>
+        
+        <div className="row">
+        <Form>
+          <Form.Group>
+              <Form.Control type="text"
+              className="form-control"
+              placeholder="enter the name"
+              value={state.search}
+              onChange = {handleSearch}
+            />
+          </Form.Group>
+            
+          <Button className="primary">
+            search
+          </Button>
+        </Form>
+          {cards}
+          </div>
       </div>
     );
   }
-}
 
 export default Community;

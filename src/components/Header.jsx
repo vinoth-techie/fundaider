@@ -25,7 +25,7 @@ import addUserForm from "./Form";
 import { useAuth } from "../contexts/AuthContext";
 import { auth } from "../fireBase/firebase";
 import InvestorProfile from "./updateProfile/InvestorsProfile";
-
+import axios from 'axios';
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -35,10 +35,13 @@ class Header extends Component {
 
     };
     this.handleLogout=this.handleLogout.bind(this);
+    this.addDetails=this.addDetails.bind(this);
   }
   toggleNav() {
     this.setState({
       isNavOpen: !this.state.isNavOpen,
+      user:[],
+      role:''
     });
   }
 
@@ -46,7 +49,29 @@ class Header extends Component {
      console.log("button click");
     await auth.signOut();
   }
+  componentDidMount(){
+      axios
+        .get("http://localhost:3001/getuser")
+        .then((response) => response.data)
+        .then((response) => this.addDetails(response))
+        .catch((error) => console.log(error));
 
+  }
+  addDetails = (data) =>{
+    let findUser =data.filter((dat)=>this.props.currentUser.email===dat.email)
+    console.log(findUser,"string")
+    this.setState({
+      ...this.state,
+      user:findUser
+    });
+    this.state.user.map((dat)=>{
+      this.setState({
+        ...this.state,
+        role:dat.role
+      })
+    })
+    console.log("sfdsad",this.state.role)
+  }
   render() {
     return (
       <React.Fragment>
@@ -89,16 +114,16 @@ class Header extends Component {
                     Community
                   </NavLink>
                 </NavItem>
-                <NavItem>
+                {this.props.currentUser &&this.state.role==="student" && <NavItem>
                   <NavLink className="nav-link" to="/form">
                     Edit Profile
                   </NavLink>
-                </NavItem>
-                <NavItem>
+                </NavItem>}
+                {this.props.currentUser && this.state.role==="invester"&&<NavItem>
                   <NavLink className="nav-link" to="/investorform">
                     Investor 
                   </NavLink>
-                </NavItem>
+                </NavItem>}
               </Nav>
              
               <Nav navbar className = {this.props.currentUser ? "d-none":"d-block justify-content-end"}>
@@ -111,7 +136,7 @@ class Header extends Component {
               <Nav navbar className = {this.props.currentUser ? "d-block justify-content-end":"d-none"}>
                 <NavItem>
                   
-                <i class="fa fa-sign-in" aria-hidden="true"></i> <button onClick = {this.handleLogout}>Logout</button>
+                <Button style={{backgroundColor:'white',color:'black'}} onClick = {this.handleLogout}>Logout</Button>
                  
                 </NavItem>
               </Nav>

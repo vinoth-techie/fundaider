@@ -35,29 +35,32 @@ export default function SignUp() {
     const [loading, setLoading] = useState(false)
     const { signUp } = useAuth(); ///currentUser
 
+    const roleRef = useRef();
     //useHistory
     const history = useHistory();
 
     const classes = useStyles();
-    async function addUser(email){
+    async function addUser(email,role){
         console.log(email,"vino")
-        await axios.post('http://localhost:3001/userdata',{
-                email:email
+        await axios.put('http://localhost:3001/userdata',{
+                email:email,
+                role:role
             } )
                 .then((response) => console.log(response.data))
                 .catch((error) => console.log(error))
     };
     async function handleSubmit(e) {
         e.preventDefault();
+        console.log("role Ref",roleRef.current.value);
+        await addUser(emailRef.current.value,roleRef.current.value)
         if (passwordRef.current.value !== passwordConfirmRef.current.value) {
             return setError('Password does not match!');
         }
-
         try {
             setError('')
             setLoading(true)
             await signUp(emailRef.current.value, passwordRef.current.value);
-            await addUser(emailRef.current.value)
+            await addUser(emailRef.current.value,roleRef.current.value)
             history.push('/home');
         }
         catch {
@@ -110,6 +113,14 @@ export default function SignUp() {
                                     placeholder="Confirm password"
                                     required
                                 />
+                            </Form.Group>
+                            <Form.Group className="mt-2">
+                            <Form.Label for="password-confirmation">Select Role<span className="text-danger"> *</span></Form.Label>
+                                
+                            <Form.Select aria-label="Default select example" ref={roleRef}>
+                                <option value="student">Student</option>
+                                <option value="invester">Invester</option>
+                            </Form.Select>
                             </Form.Group>
                             <Button
                                 type="submit"

@@ -19,6 +19,7 @@ import CommunityDetails from "./community/CommunityDetails";
 import InvestorDetails from "./investors/InvestorDetails";
 import UpdateProfile from "./updateProfile/UpdateProfile";
 import InvestorsProfile from "./updateProfile/InvestorsProfile";
+import TempInvestors from "./investors/TempInvestors";
 
 function Main() {
   const location = useLocation();
@@ -34,7 +35,7 @@ function Main() {
     return <Community history={history} />;
   };
   const CommunityDetailsPage = () => {
-    return <CommunityDetails location={location} history={history} />;
+    return <CommunityDetails location={location} history={history} currentUser={currentUser}/>;
   };
 
 
@@ -54,6 +55,11 @@ function Main() {
   const investorFormWithDetails = () => {
     return <InvestorsProfile currentUser={currentUser} history={history} logout={logout}/>;
   };
+  const investorWithDetails = () =>{
+    return (
+      <InvestorDetails />
+    )
+  }
   return (
     <>
       <Header currentUser={currentUser}/>
@@ -65,8 +71,9 @@ function Main() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/form" component={addUserFormWithDetails} />
         <Route exact path="/investorform" component={investorFormWithDetails} />
+        <Route path="/investor/details" component={TempInvestors} />
         <Route exact path="/community" component={CommunityPage} />
-        <Route path="/community/" component={CommunityDetailsPage} />
+        <Route path="/community/details" component={CommunityDetailsPage} />
         <Route exact path="/signup" component={SignUp} />
         <Redirect to="/home" />
       </Switch>

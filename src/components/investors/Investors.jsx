@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { Component } from "react";
+import React, { useState,useEffect } from "react";
 import {
   Card,
   CardBody,
@@ -14,27 +14,34 @@ import IconButton from "@material-ui/core/IconButton";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import MailIcon from "@material-ui/icons/Mail";
 import { data1 } from "../Shared/data1";
-class Investors extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-
-    this.handleCategory = this.handleCategory.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleCategory = (id, name) => {
-    console.log(id);
-    this.props.history.push({
-      pathname: `/community/${name}`,
-      state: { id: id },
+import axios from "axios";
+export default function Investors(props) { 
+  const handleCategory = (card) => {
+    //console.log(card);
+    props.history.push({
+      pathname: `/investor/details/${card.name}`,
+      state: { data: card },
     });
   };
-  handleClick = (link) => {
-    this.props.history.push(link);
-  };
-  render() {
-    const cards = data1.map((card) => {
+  const [state,setState] = useState({
+    investors:[]
+  })
+  const handleClick = (link) => {
+    props.history.push(link);
+  }; 
+  useEffect(()=>{
+    axios.get("http://localhost:3001/getInvestors")
+    .then((res)=>addInvestor(res.data))
+    .catch((err)=>console.log(err))
+    console.log("sdfsd",state.investors);
+  },[])
+  const addInvestor = (data) =>{
+    setState({
+      investors:data
+    })
+    console.log("dfsadf",state.investors)
+  }
+    const cards = state.investors&&state.investors.map((card) => {
       return (
         <div className="col-6 col-md-3 mb-3" key={card.id}>
           <Card
@@ -44,9 +51,9 @@ class Investors extends Component {
               backgroundColor: "#f1f1f1",
             }}
           >
-            <CardBody onClick={() => this.handleCategory(card.id, card.name)}>
+            <CardBody onClick={() => handleCategory(card)}>
               <CardImg
-                src={card.img}
+                src={card.imageUrl}
                 className="circular--square "
                 height="140"
                 width="50"
@@ -64,7 +71,4 @@ class Investors extends Component {
         <div className="row">{cards}</div>
       </div>
     );
-  }
-}
-
-export default Investors;
+  } 

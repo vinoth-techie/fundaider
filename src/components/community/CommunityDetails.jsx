@@ -8,31 +8,58 @@ export default class CommunityDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userDetails:null
+      card:null,
+      projects:[]
     };
 
   }
   handleClick = (link) => {
     this.props.history.push(link);
   };
-  componentDidMount=()=>{
-    axios.get("http://localhost:3001/projects/getdetails")
-    .then((response) => response.data)
-    .then((response) => this.getProj(response))
-    .catch((error) => console.log(error));
+  componentDidMount=async()=>{
+    console.log("did mount",this.props.location.state.data)
+    // await axios.get("http://localhost:3001/projects/getdetails")
+    // .then((response) => this.getProj(response.data)) 
+    // .catch((error) => console.log(error));
+
+    // await axios.get("http://localhost:3001/projects/getProj")
+    // .then((response) => this.getProjects(response.data)) 
+    // .catch((error) => console.log(error));
+  } 
+  getProjects=(data)=>{ 
+    data.map((da)=>{
+      if(da.email===this.props.currentUser.email){
+        this.setState({
+          projects:da
+        });
+        console.log(this.state.projects,"sfs")
+      }
+    })
   }
-  getProj=(data)=>{
-     this.setState({
-       userDetails:data
-     })
-     console.log(this.state.userDetails)
+  getProj=(data)=>{ 
+    data.map((da)=>{
+      if(da.email===this.props.currentUser.email){
+        this.setState({
+          card:data
+        });
+        console.log(this.state,"sample")
+      }
+    })
+     
   }
   render() {
     // eslint-disable-next-line array-callback-return
-    const cards = data.map((card) => {
-      if (card.id === this.props.location.state.id) {
-        return (
-          <div className="container">
+    // const cards =this.state.card && this.state.card.map((card) => {
+    //   //if (card.id === this.props.location.state.id) {
+    //     return (
+          
+    //     );
+    //  // }
+    // });
+    return (
+      <div className="container">
+        <div className="row">
+        <div className="container">
             <div className="main-body">
               <div className="row gutters-sm">
                 <div className="col-md-4 mb-3">
@@ -46,9 +73,9 @@ export default class CommunityDetails extends Component {
                           width="150"
                         />
                         <div className="mt-3">
-                          <h4>{card.name}</h4>
+                          <h4>{this.props.location.state.data.name}</h4>
                           <p className="text-secondary mb-1">
-                            {card.designation}
+                            {this.props.location.state.data.designation}
                           </p>
                           {/* <p className="text-muted font-size-sm">Bay Area, San Francisco, CA</p> */}
                         </div>
@@ -77,9 +104,9 @@ export default class CommunityDetails extends Component {
                           </svg>
                           Website/Blog 
                         </h6>
-                        <a href={card.gitlink} target="_blank" rel="noreferrer">
+                        <a href={this.props.location.state.data.blogs} target="_blank" rel="noreferrer">
                           <span className="text-secondary">
-                            https://bootdey.com
+                           {this.props.location.state.data.blogs}
                           </span>
                         </a>
                       </li>
@@ -101,8 +128,8 @@ export default class CommunityDetails extends Component {
                           </svg>
                           Github
                         </h6>
-                        <a href={card.gitlink} target="_blank" rel="noreferrer">
-                          <span className="text-secondary">gitlink</span>
+                        <a href={this.props.location.state.data.githublink} target="_blank" rel="noreferrer">
+                          <span className="text-secondary">{this.props.location.state.data.githublink}</span>
                         </a>
                       </li>
                       <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
@@ -123,7 +150,7 @@ export default class CommunityDetails extends Component {
                           </svg>
                           Twitter
                         </h6>
-                        <span className="text-secondary">@bootdey</span>
+                        <a href={this.props.location.state.data.twitter}><span className="text-secondary">{this.props.location.state.data.twitter}</span></a>
                       </li>
                       {/* <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                         <h6 className="mb-0">
@@ -154,26 +181,7 @@ export default class CommunityDetails extends Component {
                         </h6>
                         <span className="text-secondary">bootdey</span>
                       </li> */}
-                      <li className="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                        <h6 className="mb-0">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            className="feather feather-facebook mr-2 icon-inline text-primary"
-                          >
-                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                          </svg>
-                          Facebook
-                        </h6>
-                        <span className="text-secondary">bootdey</span>
-                      </li>
+                      
                     </ul>
                   </div>
                 </div>
@@ -185,7 +193,7 @@ export default class CommunityDetails extends Component {
                           <h6 className="mb-0">Full Name</h6>
                         </div>
                         <div className="col-sm-9 text-secondary">
-                          {card.name}
+                          {this.props.location.state.data.name}
                         </div>
                       </div>
                       <hr />
@@ -194,7 +202,7 @@ export default class CommunityDetails extends Component {
                           <h6 className="mb-0">Email</h6>
                         </div>
                         <div className="col-sm-9 text-secondary">
-                          {card.maillink}
+                          {this.props.location.state.data.email}
                         </div>
                       </div>
                       {/* <hr /> */}
@@ -220,7 +228,7 @@ export default class CommunityDetails extends Component {
                         <div className="col-sm-3">
                           <h6 className="mb-0">College</h6>
                         </div>
-                        <div className="col-sm-9 text-secondary">SKCET</div>
+                        <div className="col-sm-9 text-secondary">{this.props.location.state.data.college}</div>
                       </div>
                       <hr />
                       <div className="row">
@@ -358,12 +366,7 @@ export default class CommunityDetails extends Component {
               </div>
             </div>
           </div>
-        );
-      }
-    });
-    return (
-      <div className="container">
-        <div className="row">{cards}</div>
+        </div>
       </div>
     );
   }
