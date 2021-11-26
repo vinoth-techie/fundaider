@@ -49,7 +49,7 @@ function Community(){
     history.push(link);
   }; 
     const cards = state.community&&state.community.map((card) => {
-      return (
+      if(card.role==="student"){return (
         <div className="col-6 col-md-3 mb-3" key={card.id}>
           <Card
             style={{
@@ -97,7 +97,7 @@ function Community(){
             </CardFooter>
           </Card>
         </div>
-      );
+      );}
     });
 
     const handleSearch = (e) =>{

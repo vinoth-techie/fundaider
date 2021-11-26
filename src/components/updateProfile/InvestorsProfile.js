@@ -254,7 +254,7 @@ export default function UpdateProfile() {
     axios
       .post("http://localhost:3001/investordata", {
         name: inputField.name,
-        email: inputField.email,
+        email: currentUser&&currentUser.email,
         mobileNumber: inputField.mobileNumber,
         imageUrl: inputField.imageUrl,
         designation: inputField.designation,

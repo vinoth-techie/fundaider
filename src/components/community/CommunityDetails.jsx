@@ -22,40 +22,47 @@ export default class CommunityDetails extends Component {
     // .then((response) => this.getProj(response.data)) 
     // .catch((error) => console.log(error));
 
-    // await axios.get("http://localhost:3001/projects/getProj")
-    // .then((response) => this.getProjects(response.data)) 
-    // .catch((error) => console.log(error));
+    await axios.put("http://localhost:3001/getProjectsUpdated",{
+      email:this.props.location.state.data.email
+    })
+    .then((response) => this.getProjects(response.data)) 
+    .catch((error) => console.log(error));
   } 
-  getProjects=(data)=>{ 
-    data.map((da)=>{
-      if(da.email===this.props.currentUser.email){
-        this.setState({
-          projects:da
-        });
-        console.log(this.state.projects,"sfs")
-      }
-    })
+  getProjects=(data)=>{   
+       data.projects.map((da)=>{
+          this.setState({
+            projects:[...this.state.projects,da]
+          })
+       }) 
+       console.log(this.state.projects,"sdfdfdsfgdsfgdsfsdf");
   }
-  getProj=(data)=>{ 
-    data.map((da)=>{
-      if(da.email===this.props.currentUser.email){
-        this.setState({
-          card:data
-        });
-        console.log(this.state,"sample")
-      }
+  // getProj=(data)=>{ 
+  //   data.map((da)=>{
+  //     if(da.email===this.props.currentUser.email){
+  //       this.setState({
+  //         card:data
+  //       });
+  //       console.log(this.state,"sample")
+  //     }
+  //   })
+  // }
+
+  render() { 
+    const skillsArray = this.props.location.state.data&&this.props.location.state.data.skills.map((data)=>{
+      return(
+        <span key={data.key} style={{fontSize:'1.3rem'}}>
+          <Badge bg="primary">{data.skill}</Badge>{' '} 
+        </span>
+      )
     })
-     
-  }
-  render() {
-    // eslint-disable-next-line array-callback-return
-    // const cards =this.state.card && this.state.card.map((card) => {
-    //   //if (card.id === this.props.location.state.id) {
-    //     return (
-          
-    //     );
-    //  // }
-    // });
+    const projectsArray = this.state.projects.map((data)=>{
+      return(
+        <div key={data._id}>
+            <a href={data.projectgitlink} target="_blank">{data.projectName}</a>
+            <span>{data.projectdetails}</span>
+        </div>
+      ) 
+    }) 
     return (
       <div className="container">
         <div className="row">
@@ -249,10 +256,8 @@ export default class CommunityDetails extends Component {
                           <div
                             className="label label-success "
                             /* style={{ height: "5px" }} */
-                          >
-                            <Badge bg="primary">Web Design</Badge>{' '}   
-                            <Badge bg="primary">Web Design</Badge>{' '}
-                            <Badge bg="primary">Web Design</Badge>{' '}
+                          > {skillsArray}
+                            
                             {/* <div
                               className="progress-bar bg-primary"
                               role="progressbar"
@@ -288,7 +293,8 @@ export default class CommunityDetails extends Component {
                             <i className="material-icons text-info mr-2"></i>
                             PROJECTS{" "}
                           </h6>
-                          <small>Web Design</small>
+                          
+                          <small>{projectsArray}</small>
                           <div
                             className="progress mb-3"
                             style={{ height: "5px" }}

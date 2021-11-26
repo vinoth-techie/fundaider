@@ -119,7 +119,7 @@ export default function SignUp() {
                                 
                             <Form.Select aria-label="Default select example" ref={roleRef}>
                                 <option value="student">Student</option>
-                                <option value="invester">Invester</option>
+                                <option value="investor">Investor</option>
                             </Form.Select>
                             </Form.Group>
                             <Button

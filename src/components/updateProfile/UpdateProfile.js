@@ -152,21 +152,17 @@ export default function UpdateProfile() {
       .catch((error) => console.log(error)); 
   }, []);  
 
-
-  var sample;
   const addDisplayProj = async (dis) => {
     //await setValue(sample);
     await setDisproj(dis.filter(
       (pro) => pro.email === (currentUser && currentUser.email)
     ));
-    console.log(disproj, "sample");
+    //console.log(disproj, "sample");
   };
   const setValue = (te) => {
-    
     setDisproj(te);
     console.log(disproj, "project");
   };
-
   const [inputField, setInputField] = useState({
     name: "",
     email: currentUser && currentUser.email,
@@ -273,7 +269,7 @@ export default function UpdateProfile() {
       await axios.put("http://localhost:3001/skillUpdate",{
           email:currentUser&&currentUser.email, 
           key: data.key,
-          skill:data.label,
+          skill:data.skill,
       })
     .then((response) => console.log(response.data))
     .catch((error) => console.log(error));
@@ -284,9 +280,9 @@ export default function UpdateProfile() {
   };
 
   
-  const addProject = (e) => {
-    e.preventDefault();
-    axios
+  const addProject = async(e) => {
+    await e.preventDefault();
+    await axios
       .put("http://localhost:3001/projects", {
         email: inputField.email,
         projectName: project.projectName,
@@ -296,6 +292,7 @@ export default function UpdateProfile() {
       .then((response) => console.log(response.data))
       .catch((error) => console.log(error));
     console.log(project);
+    await window.location.reload();
   };
   function handleSubmit(e) {
     e.preventDefault();
@@ -303,7 +300,6 @@ export default function UpdateProfile() {
       return setError("Password does not match!");
     }
     console.log(inputField, "vinoth");
-
     const promises = [];
     setError("");
     setLoading(true);

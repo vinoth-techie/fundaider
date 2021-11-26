@@ -119,9 +119,9 @@ class Header extends Component {
                     Edit Profile
                   </NavLink>
                 </NavItem>}
-                {this.props.currentUser && this.state.role==="invester"&&<NavItem>
+                {this.props.currentUser && this.state.role==="investor"&&<NavItem>
                   <NavLink className="nav-link" to="/investorform">
-                    Investor 
+                    Edit Profile
                   </NavLink>
                 </NavItem>}
               </Nav>
