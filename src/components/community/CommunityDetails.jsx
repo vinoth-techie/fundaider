@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { data } from "../Shared/data";
 import "./Style.css";
 import { Badge } from 'react-bootstrap';
 import axios from 'axios';
@@ -58,7 +57,7 @@ export default class CommunityDetails extends Component {
     const projectsArray = this.state.projects.map((data)=>{
       return(
         <div key={data._id}>
-            <a href={data.projectgitlink} target="_blank">{data.projectName}</a>
+            <a href={data.projectgitlink} target="_blank" rel="noreferrer">{data.projectName}</a>
             <span>{data.projectdetails}</span>
         </div>
       ) 
@@ -74,7 +73,7 @@ export default class CommunityDetails extends Component {
                     <div className="card-body">
                       <div className="d-flex flex-column align-items-center text-center">
                         <img
-                          src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                          src={this.props.location.state.data.imageUrl}
                           alt="Admin"
                           className="rounded-circle"
                           width="150"

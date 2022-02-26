@@ -59,7 +59,7 @@ const RenderDisplayProjects = ({ pro }) => {
               <Form.Group as={Col} controlId="name">
                 <Form.Label>Portfolio Name</Form.Label>
                 <Form.Control
-                  required
+                  /* required */
                   autoComplete="off"
                   type="text"
                   name="portfolioName"
@@ -73,7 +73,7 @@ const RenderDisplayProjects = ({ pro }) => {
               <Form.Group as={Col} controlId="portfolioDetails">
                 <Form.Label>Portfolio Details</Form.Label>
                 <Form.Control
-                  required
+                  /* required */
                   autoComplete="off"
                   type="text"
                   name="portfolioDetails"
@@ -87,7 +87,7 @@ const RenderDisplayProjects = ({ pro }) => {
               <Form.Group as={Col} controlId="portfolioWebsiteLink">
                 <Form.Label>Portfolio Website Link</Form.Label>
                 <Form.Control
-                  required
+                  /* required */
                   autoComplete="off"
                   type="text"
                   name="portfolioWebsiteLink"
@@ -336,7 +336,7 @@ export default function UpdateProfile() {
                 <Form.Group as={Col} controlId="name">
                   <Form.Label>Name</Form.Label>
                   <Form.Control
-                    required
+                    /* required */
                     autoComplete="off"
                     type="text"
                     name="name"
@@ -378,7 +378,7 @@ export default function UpdateProfile() {
                 <Form.Group as={Col} controlId="mobileNumber">
                   <Form.Label>Mobile Number</Form.Label>
                   <Form.Control
-                    required
+                    /* required */
                     autoComplete="off"
                     type="text"
                     name="mobileNumber"
@@ -390,7 +390,7 @@ export default function UpdateProfile() {
                 <Form.Group as={Col} controlId="designation">
                   <Form.Label>Designation</Form.Label>
                   <Form.Control
-                    required
+                    /* required */
                     autoComplete="off"
                     type="text"
                     name="designation"
@@ -402,7 +402,7 @@ export default function UpdateProfile() {
                 <Form.Group as={Col} controlId="investortype">
                   <Form.Label>Investor Type</Form.Label>
                   <Form.Control
-                    required
+                    /* required */
                     autoComplete="off"
                     type="text"
                     name="investortype"
@@ -416,7 +416,7 @@ export default function UpdateProfile() {
                 <Form.Group as={Col} controlId="investrange">
                   <Form.Label>INVESTMENT RANGE </Form.Label>
                   <Form.Control
-                    required
+                    /* required */
                     autoComplete="off"
                     type="text"
                     name="investrange"
@@ -428,7 +428,7 @@ export default function UpdateProfile() {
                 <Form.Group as={Col} controlId="location">
                   <Form.Label>LOCATION </Form.Label>
                   <Form.Control
-                    required
+                    /* required */
                     autoComplete="off"
                     type="text"
                     name="location"
@@ -440,7 +440,7 @@ export default function UpdateProfile() {
                 <Form.Group as={Col} controlId="website">
                   <Form.Label>Website</Form.Label>
                   <Form.Control
-                   // required
+                   // /* required */
                     autoComplete="off"
                     type="text"
                     name="website"
@@ -454,7 +454,7 @@ export default function UpdateProfile() {
                 <Form.Group as={Col} controlId="aboutMe">
                   <Form.Label>ABOUT ME</Form.Label>
                   <Form.Control
-                    required
+                    /* required */
                     autoComplete="off"
                     type="text"
                     name="aboutMe"
@@ -488,7 +488,7 @@ export default function UpdateProfile() {
                 <Form.Group as={Col} controlId="name">
                   <Form.Label>Portfolio Name</Form.Label>
                   <Form.Control
-                    required
+                    /* required */
                     autoComplete="off"
                     type="text"
                     name="portfolioName"
@@ -502,7 +502,7 @@ export default function UpdateProfile() {
                 <Form.Group as={Col} controlId="portfolioDetails">
                   <Form.Label>Portfolio Details</Form.Label>
                   <Form.Control
-                    required
+                    /* required */
                     autoComplete="off"
                     type="text"
                     name="portfolioDetails"
@@ -516,7 +516,7 @@ export default function UpdateProfile() {
                 <Form.Group as={Col} controlId="portfolioWebsiteLink">
                   <Form.Label>Portfolio Website Link</Form.Label>
                   <Form.Control
-                    required
+                    /* required */
                     autoComplete="off"
                     type="text"
                     name="portfolioWebsiteLink"

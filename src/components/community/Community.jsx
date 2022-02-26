@@ -69,17 +69,18 @@ function Community(){
               <h5 className="text-center">{card.designation}</h5>
             </CardBody>
             <CardFooter style={{}} className="row-3  ">
-              <a href={card.gitlink} target="_blank" rel="noreferrer">
-                <IconButton color="inherit">
+              <a href={card.githublink} target="_blank" rel="noreferrer">
+              <IconButton color="inherit">
+                  
                   <GitHubIcon />
-                </IconButton>
+                </IconButton>{console.log(card,"vinoth kumar")}
               </a>
-              <a href={card.linkedinlink} target="_blank" rel="noreferrer">
+              <a href={card.linkedin} target="_blank" rel="noreferrer">
                 <IconButton color="inherit">
                   <LinkedInIcon />
                 </IconButton>
               </a>
-              <a href={card.maillink} target="_blank" rel="noreferrer">
+              <a href={card.email} target="_blank" rel="noreferrer">
                 <IconButton color="inherit">
                   <MailIcon />
                 </IconButton>
@@ -89,7 +90,7 @@ function Community(){
                   <FacebookIcon />
                 </IconButton>
               </a> */}
-              <a href={card.maillink} target="_blank" rel="noreferrer">
+              <a href={card.twitter} target="_blank" rel="noreferrer">
                 <IconButton color="inherit">
                  <TwitterIcon/>
                 </IconButton>
@@ -119,14 +120,14 @@ function Community(){
           <Form.Group>
               <Form.Control type="text"
               className="form-control"
-              placeholder="enter the name"
+              placeholder="Enter the Name/Role"
               value={state.search}
               onChange = {handleSearch}
             />
           </Form.Group>
             
           <Button className="primary">
-            search
+            Search
           </Button>
         </Form>
           {cards}

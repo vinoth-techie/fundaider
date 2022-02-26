@@ -1,49 +1,54 @@
-/* eslint-disable no-unused-vars */
 import React, { useState,useEffect } from "react";
 import {
   Card,
   CardBody,
   CardTitle,
-  CardSubTitle,
   CardImg,
+  Button,
   CardFooter,
 } from "reactstrap";
-//import GitHubIcon from '@mui/icons-material/GitHub';
+import { Form } from "react-bootstrap";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import IconButton from "@material-ui/core/IconButton";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import MailIcon from "@material-ui/icons/Mail";
-import { data1 } from "../Shared/data1";
-import axios from "axios";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import TwitterIcon from '@material-ui/icons/Twitter';
+import { data } from "../Shared/data";
+import axios from 'axios';
+import {useHistory} from 'react-router-dom'
 export default function Investors(props) { 
-  const handleCategory = (card) => {
-    //console.log(card);
-    props.history.push({
-      pathname: `/investor/details/${card.name}`,
+  const [state,setState] = useState({
+    community:[],
+    result:[],
+    search:''
+  });
+  const history = useHistory();
+ useEffect(()=>{
+    axios.get("http://localhost:3001/getInvestors")
+    .then((res)=>addCommunity(res.data))
+    .catch((err)=>console.log(err))
+    console.log("sdfsd",state.community);
+  },[])
+ const addCommunity = (data) =>{
+    setState({
+      community:data,
+      result:data,
+    })
+    console.log("dfsadf",state.community)
+  }
+  const handleCategory = (card) => { 
+    history.push({
+      pathname: `/community/details`,
       state: { data: card },
     });
   };
-  const [state,setState] = useState({
-    investors:[]
-  })
   const handleClick = (link) => {
-    props.history.push(link);
+    history.push(link);
   }; 
-  useEffect(()=>{
-    axios.get("http://localhost:3001/getInvestors")
-    .then((res)=>addInvestor(res.data))
-    .catch((err)=>console.log(err))
-    console.log("sdfsd",state.investors);
-  },[])
-  const addInvestor = (data) =>{
-    setState({
-      investors:data
-    })
-    console.log("dfsadf",state.investors)
-  }
-    const cards = state.investors&&state.investors.map((card) => {
-      return (
-        <div className="col-6 col-md-3 mb-3" key={card.id}>
+    const cards = state.community&&state.community.map((card) => {
+      if(card){return (
+        <div className="col-6 col-md-3 mb-3" key={card._id}>
           <Card
             style={{
               boxShadow:
@@ -58,17 +63,76 @@ export default function Investors(props) {
                 height="140"
                 width="50"
               ></CardImg>
-              <CardTitle className="text-center">{card.name}</CardTitle>
-              <h5 className="text-center">{card.designation}</h5>
+              <CardTitle className="text-center"></CardTitle>
+              <h5 className="text-center">{card.name}</h5>
+              <h6 className="text-center">{card.designation}</h6>
+              
             </CardBody>
-            <CardFooter style={{}} className="row-3  "></CardFooter>
+            {/* <CardFooter style={{}} className="row-3  ">
+              <a href={card.githublink} target="_blank" rel="noreferrer">
+              <IconButton color="inherit">
+                  
+                  <GitHubIcon />
+                </IconButton>{console.log(card,"vinoth kumar")}
+              </a>
+              <a href={card.linkedin} target="_blank" rel="noreferrer">
+                <IconButton color="inherit">
+                  <LinkedInIcon />
+                </IconButton>
+              </a>
+              <a href={card.email} target="_blank" rel="noreferrer">
+                <IconButton color="inherit">
+                  <MailIcon />
+                </IconButton>
+              </a>
+              {/* <a href={card.maillink} target="_blank" rel="noreferrer">
+                <IconButton color="inherit">
+                  <FacebookIcon />
+                </IconButton>
+              </a> */}
+              {/* <a href={card.twitter} target="_blank" rel="noreferrer">
+                <IconButton color="inherit">
+                 <TwitterIcon/>
+                </IconButton>
+              </a>
+            </CardFooter>  */}
           </Card>
         </div>
-      );
+      );}
     });
+
+    const handleSearch = (e) =>{
+      e.preventDefault();
+      setState({
+        ...state,
+        [e.target.name]:e.target.value,
+        community:state.result.filter(o =>{
+          return Object.keys(o).some(k => o[k].toString().toLowerCase().includes(e.target.value.toString().toLowerCase()))
+        })
+      });
+      console.log("sdfsa",state.search);
+    }
     return (
       <div className="container">
-        <div className="row">{cards}</div>
+        
+        <div className="row">
+        <Form>
+          <Form.Group>
+              <Form.Control type="text"
+              className="form-control"
+              
+              placeholder="enter the name"
+              value={state.search}
+              onChange = {handleSearch}
+            />
+          </Form.Group>
+            
+          <Button className="primary">
+            search
+          </Button>
+        </Form>
+          {cards}
+          </div>
       </div>
     );
   } 

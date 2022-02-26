@@ -72,6 +72,7 @@ class Header extends Component {
     })
     console.log("sfdsad",this.state.role)
   }
+  //page rendering
   render() {
     return (
       <React.Fragment>

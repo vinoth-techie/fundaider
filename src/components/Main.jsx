@@ -20,7 +20,7 @@ import InvestorDetails from "./investors/InvestorDetails";
 import UpdateProfile from "./updateProfile/UpdateProfile";
 import InvestorsProfile from "./updateProfile/InvestorsProfile";
 import TempInvestors from "./investors/TempInvestors";
-
+import Footer from "./footer/footer";
 function Main() {
   const location = useLocation();
   const history = useHistory();
@@ -77,6 +77,7 @@ function Main() {
         <Route exact path="/signup" component={SignUp} />
         <Redirect to="/home" />
       </Switch>
+    {/*   <Footer/> */}
     </>
   );
 }

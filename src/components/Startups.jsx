@@ -16,76 +16,70 @@ import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import MailIcon from "@material-ui/icons/Mail";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import TwitterIcon from '@material-ui/icons/Twitter';
-
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import StarIcon from '@material-ui/icons/Star';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom'
 function Community(){ 
-  const [state,setState] = useState({
-    community:[],
-    result:[],
-    search:''
+  const [state,setState] = useState({ 
+    result:[], 
   });
   const history = useHistory();
  useEffect(()=>{
-    axios.get("http://localhost:3001/getuser")
+    axios.get("http://localhost:3001/getStartups")
     .then((res)=>addCommunity(res.data))
     .catch((err)=>console.log(err))
-    console.log("sdfsd",state.community);
+    //console.log("sdfsd",state.community);
   },[])
  const addCommunity = (data) =>{
-    setState({
-      community:data,
+   console.log(data);
+    setState({ 
       result:data,
-    })
-    console.log("dfsadf",state.community)
+    }) 
   }
-  const handleCategory = (card) => { 
-    history.push({
-      pathname: `/community/details`,
-      state: { data: card },
-    });
-  };
+  // const handleCategory = (card) => { 
+  //   history.push({
+  //     pathname: `/community/details`,
+  //     state: { data: card },
+  //   });
+  // };
   const handleClick = (link) => {
     history.push(link);
   }; 
-    const cards = state.community&&state.community.map((card) => {
+    const cards = state.result&&state.result.map((card) => {
       return (
-        <div className="col-6 col-md-3 mb-3" key={card.id}>
+        // <div className="col-6 col-md-3 mb-3" key={card.id}>
           <Card
+          key={card._id}
+          className="col-md-3 align-items-right"
             style={{
               boxShadow:
                 "rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px",
               backgroundColor: "#f1f1f1",
             }}
           >
-            <CardBody onClick={() => handleCategory(card)}>
+            {/* <CardBody>//onClick={() => handleCategory(card)}> */}
+            <CardBody>
               <CardImg
-                src={card.imageUrl}
+                src={card.img}
                 className="circular--square "
-                height="140"
-                width="50"
+                height="150"
+                width="80"
               ></CardImg>
               <CardTitle className="text-center">{card.name}</CardTitle>
-              <h5 className="text-center">{card.designation}</h5>
+              <p className="text-center">{card.description}</p>
+              <p><LocationOnIcon></LocationOnIcon>{card.location}</p> 
             </CardBody>
+            {/* <CardBody>{card.email}</CardBody> */}
           </Card>
-        </div>
+        // </div>
       );
     });
 
-    const handleSearch = (e) =>{
-      e.preventDefault();
-      setState({
-        ...state,
-        [e.target.name]:e.target.value,
-        community:state.result.filter(o =>{
-          return Object.keys(o).some(k => o[k].toString().toLowerCase().includes(e.target.value.toString().toLowerCase()))
-        })
-      });
-      console.log("sdfsa",state.search);
-    }
+
     return (
       <div className="container">
+      <div className="row">
         
         {/* <div className="row">
         <Form>
@@ -105,6 +99,7 @@ function Community(){
           {cards}
           </div> */}
           {cards}
+      </div>
       </div>
     );
   }

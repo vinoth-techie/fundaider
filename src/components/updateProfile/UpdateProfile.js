@@ -617,7 +617,7 @@ export default function UpdateProfile() {
         <h3>Start-Up</h3>
         <div className="col-12"></div>
         <Button onClick={handleStartUp}>
-          <i class="fa fa-plus-square" aria-hidden="true"></i> Add Start-Up
+          <i class="fa fa-plus-square" aria-hidden="true"></i> Pitch Your Startup Idea
         </Button>
         <Card className={showStartup ? "border" : "d-none border"}>
           <Card.Header>StartUp Details</Card.Header>
