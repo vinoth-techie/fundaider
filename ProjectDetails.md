@@ -15,6 +15,11 @@ This project motive is to provide open source for investors and startups and to 
 
 <a href="https://drive.google.com/uc?export=view&id=1L52VVV6OtwjuBX_LPt7G6qLTl5OPHN6Z"><img src="https://drive.google.com/uc?export=view&id=1L52VVV6OtwjuBX_LPt7G6qLTl5OPHN6Z" style="width: 650px; max-width: 100%; height: auto" title="HOME PAGE" />
  
-<a href="https://drive.google.com/uc?export=view&id=1O80ZvPeqMU1t4r__hxTAIBh9daJy2uGN"><img src="https://drive.google.com/uc?export=view&id=1O80ZvPeqMU1t4r__hxTAIBh9daJy2uGN" style="width: 650px; max-width: 100%; height: auto" title="HOME PAGE" />
+<a href="https://drive.google.com/uc?export=view&id=1O80ZvPeqMU1t4r__hxTAIBh9daJy2uGN"><img src="https://drive.google.com/uc?export=view&id=1O80ZvPeqMU1t4r__hxTAIBh9daJy2uGN" style="width: 650px; max-width: 100%; height: auto" title="SIGNUP PAGE" />
+
+<a href="https://drive.google.com/uc?export=view&id=16q6SExYyNvhr0maLf9pFkZEw05vKnh0y"><img src="https://drive.google.com/uc?export=view&id=16q6SExYyNvhr0maLf9pFkZEw05vKnh0y" style="width: 650px; max-width: 100%; height: auto" title="LOGIN PAGE" />
  
+<a href="https://drive.google.com/uc?export=view&id=1zvqki85PsV9vvn4kBlofvhUoIF-cpYQL"><img src="https://drive.google.com/uc?export=view&id=1zvqki85PsV9vvn4kBlofvhUoIF-cpYQL" style="width: 650px; max-width: 100%; height: auto" title="INVESTOR PAGE" /> 
  
+ <a href="https://drive.google.com/uc?export=view&id=1NRP1wJ5jnlOTCq6__RuARPfU8w1KxcnE"><img src="https://drive.google.com/uc?export=view&id=1NRP1wJ5jnlOTCq6__RuARPfU8w1KxcnE" style="width: 650px; max-width: 100%; height: auto" title="INVESTOR PAGE" />
+
